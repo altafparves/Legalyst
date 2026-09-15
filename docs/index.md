@@ -15,6 +15,12 @@
 
 ## Product
 
+**Legalyst** is a web platform that helps Indonesian F&B and retail micro and small businesses (MSMEs) figure out exactly which government licenses, certifications, and tax filings apply to them — and how to complete each one — without needing prior legal knowledge or the budget for a consultant.
+
+Instead of navigating separate portals and dense regulatory language across OSS-RBA, KBLI 2020, PIRT, Halal certification, and annual SPT tax filing, users describe their business in plain Bahasa Indonesia. Legalyst matches this description to the correct KBLI classification, generates a personalized compliance checklist with every item traced back to its source regulation, and auto-generates the draft documents needed to fulfill each requirement.
+
+The goal is simple: give small business owners the same clarity on compliance that larger companies get from a legal team, at a cost and complexity level that fits a warung or home-based producer.
+
 
 
 ## Background and Problem
