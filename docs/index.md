@@ -2,7 +2,6 @@
 
 ## Group Identity
 
-- Group name: 
 - Senior Project
 
 
