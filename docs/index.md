@@ -46,3 +46,23 @@ Legalyst gives an F&B or retail micro or small business a single place to find o
 | OSS-RBA Portal (oss.go.id) | Direct | Official government licensing portal | Authoritative and free | Assumes the user already knows their KBLI code and which permits apply; no guidance layer |
 | Easybiz.id | Direct | Paid business permit consulting service | Handles the full filing process | Priced for established companies, beyond a micro business budget |
 | Justika.com | Indirect | Online legal consultation marketplace | Access to real lawyers | Per-consultation pricing and general legal scope, not a structured compliance path |
+
+## Gantt Chart
+
+## Project Timeline
+
+Sprint 0 = Session 1–4 · Sprint 1 = Session 5–6 · Sprint 2 = Session 7–8 · Sprint 3 = Session 9–11 · Demo = Session 12
+
+| Activity | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| Brainstorming | ● | ● | | | | | | | | | | |
+| Requirement Analysis | | ● | ● | | | | | | | | | |
+| Sprint 0 — Infrastructure & Corpus | | | ● | ● | | | | | | | | |
+| Sprint 1 — Business Profiler (AI) | | | | | ● | ● | | | | | | |
+| Sprint 2 — Compliance Wizard (RAG) | | | | | | | ● | ● | | | | |
+| Sprint 3 — Document Generator | | | | | | | | | ● | ● | | |
+| Integration & Testing | | | | | | | | | | ● | ● | |
+| Azure Deployment | | | ● | ● | | | | | | | ● | |
+| Usability Testing | | | | | | | | | | | ● | |
+| Documentation | | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● |
+| Demo Preparation | | | | | | | | | | | | ● |
