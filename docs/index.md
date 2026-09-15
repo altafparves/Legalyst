@@ -47,7 +47,6 @@ Legalyst gives an F&B or retail micro or small business a single place to find o
 | Easybiz.id | Direct | Paid business permit consulting service | Handles the full filing process | Priced for established companies, beyond a micro business budget |
 | Justika.com | Indirect | Online legal consultation marketplace | Access to real lawyers | Per-consultation pricing and general legal scope, not a structured compliance path |
 
-## Gantt Chart
 
 ## Project Timeline
 
