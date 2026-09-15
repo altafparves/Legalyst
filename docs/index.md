@@ -39,6 +39,22 @@ Legalyst gives an F&B or retail micro or small business a single place to find o
 | Interactive Compliance Wizard | A rule engine filters the obligation table by KBLI code, business scale, and location, while vector search retrieves the relevant regulation clauses. Both feed a language model that produces a personalised, plain-language checklist in which every item cites its source regulation. Obligations the rule engine cannot confirm are flagged "verify manually" rather than dropped. |
 | Auto-Document Generator | Checklist items are turned into draft documents by populating templates with the user's profile data and rendering them to PDF for download. |
 
+## Low-Fidelity Wireframes
+
+Mobile-first low-fidelity wireframes for the core screens, covering the primary flow from business profile setup through the compliance wizard, generated documents, and reminders (Lab 2.4 deliverable).
+
+| Screen | Description |
+|---|---|
+| Profil Bisnis | Business profile view — company info, legal details, and linked documents |
+| Compliance Wizard | Personalized compliance checklist for a given KBLI code, business scale, and location, with the source regulation shown alongside each item |
+| Dokumen | List of generated documents and reminders, filterable by category (Legal / Keuangan) |
+| Pengingat | Detail view for a single reminder (e.g. an upcoming license renewal) |
+
+![Profil Bisnis wireframe](assets/image3.png)
+![Compliance Wizard wireframe](assets/image1.png)
+![Dokumen wireframe](assets/image2.png)
+![Pengingat wireframe](assets/image4.png)
+
 ## Product Goals
 
 - Help Indonesian F&B and retail MSMEs (micro and small businesses) correctly identify which government licenses, certifications, and tax obligations apply to their specific business, without needing prior legal or regulatory knowledge.
@@ -72,6 +88,20 @@ Legalyst gives an F&B or retail micro or small business a single place to find o
 | FR 9 | The system shall allow the user to select a checklist item and generate a draft document by populating a template with their business profile data. |
 | FR 10 | The system shall render generated draft documents into downloadable PDF format. |
 | FR 11 | The system shall allow the user to download the generated PDF document. |
+
+## System Design
+
+### Use Case Diagram
+
+The primary actor is the MSME business owner, interacting with Legalyst end-to-end: entering their business profile, reviewing and confirming the suggested KBLI code, viewing their generated compliance checklist and its source regulations, and generating/downloading draft documents.
+
+![Legalyst Use Case Diagram](assets/Legalyst%20Use%20Case%20Diagram.png)
+
+### Entity Relationship Diagram
+
+The data model separates the regulatory corpus (`kbli_code`, `regulation_source`, `regulation_clause`, `compliance_obligation`, `applicability_rule`) from a business's own data (`business`, `business_kbli`, `compliance_checklist`, `checklist_item`, `generated_document`), with citation join tables (`rule_citation`, `checklist_item_citation`) linking checklist items back to the exact regulation clauses that justify them.
+
+![Legalyst Entity Relationship Diagram](assets/Legalyst%20Entity%20Relationship%20Diagram.png)
 
 ## Competitor Analysis
 
