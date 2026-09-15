@@ -1,5 +1,7 @@
 # Legalyst
 
+[![Legalyst CI - Lint & Build](https://github.com/altafparves/Legalyst/actions/workflows/ci.yml/badge.svg)](https://github.com/altafparves/Legalyst/actions/workflows/ci.yml)
+
 
 
 Legalyst Group \

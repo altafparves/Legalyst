@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.ruff_cache/
+.venv/
+venv/
+*.egg-info/
+
+# Node (frontend has its own .gitignore too, this catches anything at the root)
+node_modules/
+.next/
+npm-debug.log*
+
+# Env files
+.env
+.env.local
+
+# OS
+.DS_Store
