@@ -39,6 +39,40 @@ Legalyst gives an F&B or retail micro or small business a single place to find o
 | Interactive Compliance Wizard | A rule engine filters the obligation table by KBLI code, business scale, and location, while vector search retrieves the relevant regulation clauses. Both feed a language model that produces a personalised, plain-language checklist in which every item cites its source regulation. Obligations the rule engine cannot confirm are flagged "verify manually" rather than dropped. |
 | Auto-Document Generator | Checklist items are turned into draft documents by populating templates with the user's profile data and rendering them to PDF for download. |
 
+## a. Product Goals
+
+- Help Indonesian F&B and retail MSMEs (micro and small businesses) correctly identify which government licenses, certifications, and tax obligations apply to their specific business, without needing prior legal or regulatory knowledge.
+- Reduce unintentional non-compliance among MSMEs by translating dense, agency-specific regulatory language (OSS-RBA, KBLI 2020, PIRT, Halal, SPT) into a single, plain-language, personalized checklist.
+- Lower the cost and effort barrier to compliance for micro-businesses that cannot afford legal staff or paid consulting services like Easybiz.id or Justika.com.
+- Accelerate the document preparation process by auto-generating draft compliance documents from the user's business profile, reducing manual form-filling errors.
+- Build user trust through source-cited recommendations (every checklist item traces back to its regulation) and transparent flagging of items the system cannot confidently confirm ("verify manually"), rather than silently omitting them.
+
+## b. Potential Product Users and Their Needs
+
+| User Segment | Description | Needs |
+|---|---|---|
+| Home-based food producers (PIRT-scale) | Individuals producing packaged food/beverages from home, often first-time business owners | Simple, jargon-free way to know if they need PIRT/Halal certification; low/no-cost guidance |
+| Warung and small F&B outlet owners | Small food stalls/restaurants with limited staff and no legal/admin department | Fast way to determine required licenses (OSS-RBA, KBLI classification) without hiring consultants |
+| Small retail shop owners | Micro/small retailers selling physical goods | Clarity on which business licensing and tax obligations apply to their specific retail category |
+| Growing MSMEs preparing to formalize | Businesses transitioning from informal to formal legal status | Step-by-step onboarding to determine correct KBLI code and a complete, personalized obligation checklist |
+| MSME owners facing annual tax filing (SPT) | Business owners unfamiliar with tax deadlines/forms | Reminders and guidance integrated with their specific business profile, not generic tax info |
+
+## d. Functional Requirements for the Designed Use Cases
+
+| FR | Description |
+|---|---|
+| FR 1 | The system shall allow the user to input a free-text description of their business in Bahasa Indonesia. |
+| FR 2 | The system shall embed the user's business description and match it against the KBLI 2020 codebook, returning the top three candidate codes with confidence scores. |
+| FR 3 | The system shall allow the user to confirm one of the suggested KBLI codes or manually override it with a different code. |
+| FR 4 | The system shall filter the obligation table using the confirmed KBLI code, business scale, and business location via a rule engine. |
+| FR 5 | The system shall retrieve relevant regulation clauses related to the filtered obligations using vector search. |
+| FR 6 | The system shall generate a personalized, plain-language compliance checklist by combining rule-engine output and retrieved regulation clauses through a language model. |
+| FR 7 | The system shall display, for every checklist item, a citation to its source regulation. |
+| FR 8 | The system shall flag any obligation the rule engine cannot confidently confirm as "verify manually" instead of omitting it from the checklist. |
+| FR 9 | The system shall allow the user to select a checklist item and generate a draft document by populating a template with their business profile data. |
+| FR 10 | The system shall render generated draft documents into downloadable PDF format. |
+| FR 11 | The system shall allow the user to download the generated PDF document. |
+
 ## Competitor Analysis
 
 | Competitor | Type | Product | Strengths | Weaknesses |
