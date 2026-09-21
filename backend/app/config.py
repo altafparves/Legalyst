@@ -10,6 +10,9 @@ class Settings:
             for origin in os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(",")
             if origin.strip()
         ]
+        self.database_url = os.environ.get(
+            "DATABASE_URL", "postgresql+psycopg://legalyst:legalyst@localhost:55432/legalyst"
+        )
 
 
 @lru_cache
