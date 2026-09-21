@@ -8,7 +8,7 @@
 |---|---|---|
 | `obligation_id` | Yes | `<TRACK>-<3-digit number>`, e.g. `OSS-001`, `PIRT-014`, `HALAL-003`, `SPT-007`. Unique across the whole table, not just within a track. |
 | `track` | Yes | One of: `OSS`, `PIRT`, `HALAL`, `SPT`. |
-| `kbli_scope` | Yes | One or more KBLI 2020 5-digit codes, comma-separated (e.g. `10771,10772`), or `ALL` if the obligation applies to every KBLI code in scope. |
+| `kbli_scope` | Yes | One or more KBLI 2025 5-digit codes, comma-separated (e.g. `10111,10112`), or `ALL` if the obligation applies to every KBLI code in scope. |
 | `business_scale` | Yes | One or more of `mikro`, `kecil`, comma-separated, or `ALL` if scale-independent. (MVP scope is micro + small only — don't add `menengah`/`besar` rows.) |
 | `risk_tier` | Only for `track = OSS` | One of `rendah`, `menengah rendah`, `menengah tinggi`, `tinggi` (OSS-RBA risk tiers). Leave blank for PIRT/HALAL/SPT rows. |
 | `requirement_text` | Yes | Plain-language Bahasa Indonesia description of what the business must do. Paraphrase — don't paste raw legal text; this is what the user sees on their checklist. |
