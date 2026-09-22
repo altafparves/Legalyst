@@ -15,9 +15,21 @@ uvicorn app.main:app --reload
 
 The API runs at `http://localhost:8000`. Check `GET /health` for a 200 response.
 
+## Database
+
+Local Postgres + pgvector runs via Docker (from the repo root):
+
+```bash
+docker compose up -d postgres
+cd backend
+alembic upgrade head
+```
+
+Mapped to host port `55432` (not the default 5432/5433) to avoid clashing with any Postgres you might already have installed locally — `DATABASE_URL` in `.env.example` matches. See [`docs/schema.md`](../docs/schema.md) for the ERD and table notes.
+
 ## Config
 
-All configuration is read from environment variables (see `.env.example`) — nothing is hardcoded. `APP_ENV` and `CORS_ORIGINS` are loaded in `app/config.py`.
+All configuration is read from environment variables (see `.env.example`) — nothing is hardcoded. `APP_ENV`, `CORS_ORIGINS`, and `DATABASE_URL` are loaded in `app/config.py`.
 
 ## Lint
 
