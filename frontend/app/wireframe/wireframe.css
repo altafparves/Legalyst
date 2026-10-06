@@ -1,0 +1,12 @@
+.wireframe {
+  --brand: var(--primary);
+  --brand-dark: var(--primary);
+  --brand-soft: var(--secondary);
+  --surface-muted: var(--background);
+  --ink: var(--foreground);
+  --ink-muted: #475569;
+  --line: var(--border);
+  --line-strong: #94a3b8;
+}
+.wireframe button { cursor: pointer; }
+.wireframe button:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
