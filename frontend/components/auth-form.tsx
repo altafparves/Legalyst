@@ -2,12 +2,13 @@
 
 import { useState, type ComponentProps, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { submitAuth, type AuthMode } from "@/lib/auth";
+import { authErrorMessage, submitAuth, type AuthMode } from "@/lib/auth";
 
 const MIN_PASSWORD_LENGTH = 8;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -21,7 +22,6 @@ const copy = {
     subtitle: "Lanjutkan cek kepatuhan usaha Anda.",
     submit: "Masuk",
     pending: "Memproses...",
-    success: "Formulir valid. Login belum terhubung ke server.",
     switchPrompt: "Belum punya akun?",
     switchLabel: "Daftar",
     switchHref: "/register",
@@ -31,7 +31,6 @@ const copy = {
     subtitle: "Mulai petakan izin dan kewajiban usaha Anda.",
     submit: "Daftar",
     pending: "Memproses...",
-    success: "Formulir valid. Pendaftaran belum terhubung ke server.",
     switchPrompt: "Sudah punya akun?",
     switchLabel: "Masuk",
     switchHref: "/login",
@@ -79,12 +78,13 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const router = useRouter();
 
   function update(field: Field, value: string) {
     setValues((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
-    setNotice(null);
+    setServerError(null);
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -94,13 +94,15 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
     if (Object.keys(nextErrors).length > 0) return;
 
     setPending(true);
+    setServerError(null);
     try {
       await submitAuth(mode, {
         email: values.email.trim(),
         password: values.password,
       });
-      setNotice(text.success);
-    } finally {
+      router.push("/onboarding");
+    } catch (error) {
+      setServerError(authErrorMessage(mode, error));
       setPending(false);
     }
   }
@@ -169,8 +171,8 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
           {pending ? text.pending : text.submit}
         </Button>
 
-        <p role="status" aria-live="polite" className="min-h-5 text-sm">
-          {notice && <span className="text-emerald-700">{notice}</span>}
+        <p role="alert" aria-live="polite" className="min-h-5 text-sm">
+          {serverError && <span className="text-red-600">{serverError}</span>}
         </p>
       </form>
 
