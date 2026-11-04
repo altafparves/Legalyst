@@ -55,3 +55,4 @@ export function ComplianceStepper({ currentStep }: StepperProps) {
     </div>
   );
 }
+

@@ -12,3 +12,4 @@ export function CitationBadge({ citation }: CitationBadgeProps) {
     </span>
   );
 }
+
