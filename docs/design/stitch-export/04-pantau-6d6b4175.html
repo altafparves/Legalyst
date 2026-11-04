@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="id"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&amp;family=Hanken+Grotesk:ital,wght@0,300..900;1,300..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "on-tertiary-fixed-variant": "#534609",
+          "surface-tint": "#ecc246",
+          "on-primary": "#3d2e00",
+          "inverse-surface": "#d6e3ff",
+          "on-primary-container": "#4b3a00",
+          "surface-container": "#0c203b",
+          "surface-variant": "#233551",
+          "on-primary-fixed-variant": "#584400",
+          "on-secondary-fixed-variant": "#27486e",
+          "on-secondary-container": "#97b7e3",
+          "on-secondary-fixed": "#001c37",
+          "secondary-fixed-dim": "#a8c9f5",
+          "surface-container-highest": "#233551",
+          "tertiary-fixed-dim": "#d9c67d",
+          "on-error": "#690005",
+          "secondary-fixed": "#d2e4ff",
+          "surface-container-high": "#182a46",
+          "background": "#00132e",
+          "surface-container-low": "#071c36",
+          "on-tertiary-container": "#473b00",
+          "tertiary-fixed": "#f7e297",
+          "on-surface-variant": "#d1c5af",
+          "surface-container-lowest": "#000e24",
+          "primary-fixed": "#ffe08e",
+          "surface-dim": "#00132e",
+          "outline": "#99907b",
+          "surface-bright": "#283a56",
+          "tertiary-container": "#b8a661",
+          "outline-variant": "#4d4635",
+          "secondary-container": "#27486e",
+          "on-background": "#d6e3ff",
+          "on-error-container": "#ffdad6",
+          "on-tertiary": "#3a3000",
+          "error": "#ffb4ab",
+          "error-container": "#93000a",
+          "tertiary": "#d9c67d",
+          "on-primary-fixed": "#241a00",
+          "primary": "#ecc246",
+          "on-tertiary-fixed": "#221b00",
+          "secondary": "#a8c9f5",
+          "on-surface": "#d6e3ff",
+          "primary-fixed-dim": "#ecc246",
+          "primary-container": "#c9a227",
+          "inverse-primary": "#755b00",
+          "surface": "#071c36",
+          "on-secondary": "#0a3256",
+          "inverse-on-surface": "#1f314d",
+          "navy-card": "#0b2240",
+          "navy-sub": "#081b33",
+          "navy-border": "#1e3d6b"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "spacing": {
+          "margin-desktop": "3rem",
+          "space-sm": "0.5rem",
+          "space-lg": "1.5rem",
+          "space-xl": "2.5rem",
+          "gutter-desktop": "1.5rem",
+          "margin": "1.25rem",
+          "space-md": "1rem",
+          "space-xs": "0.25rem",
+          "gutter": "1rem",
+          "margin-mobile": "1rem"
+        },
+        "fontFamily": {
+          "display-lg": ["Bodoni Moda"],
+          "body-md": ["Hanken Grotesk"],
+          "body-sm": ["Hanken Grotesk"],
+          "display-lg-mobile": ["Bodoni Moda"],
+          "label-sm": ["Hanken Grotesk"],
+          "headline-sm": ["Bodoni Moda"],
+          "headline-lg": ["Bodoni Moda"],
+          "title-lg": ["Hanken Grotesk"],
+          "headline-md": ["Bodoni Moda"],
+          "label-md": ["Hanken Grotesk"],
+          "body-lg": ["Hanken Grotesk"],
+          "label-lg": ["Hanken Grotesk"],
+          "title-md": ["Hanken Grotesk"],
+          "headline-lg-mobile": ["Bodoni Moda"]
+        }
+      }
+    }
+  };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-[#071c36]/95 backdrop-blur-xl border-b border-[#1e3d6b]/60 shadow-[0_4px_20px_rgba(0,0,0,0.35)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Legalyst - Simplify Your Legal Journey" class="h-9 w-auto object-contain shrink-0 brightness-110" src="https://lh3.googleusercontent.com/aida/AEtjO1XPG8Y6fxD0XtnQ7-sQ-P9QGI4ydhvkAzTxIlpI7V63kN-Dj4o-K-zwRKwW8hspD3YE0dofyfkVaAYuFJi3AousJ4NXzU6htMytZZHLFTuAXbOC2OxEZBwGq9MuhjTgmwk_rxgMqE9ixKYj9_KZJir2WMLKmvHKxsefN7BbCFP25KLAVKawge8fs7b_W3ivpXPI8_7uZETOQGclTFVxGjk7mXMBRjUCzLBfswDYfP7L44S_LzFNKJeuDw"/><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-xs"><span class="font-title-md text-title-md text-primary font-bold truncate leading-tight">Legalyst UMKM</span><span class="inline-flex items-center px-space-xs py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30 font-label-sm text-label-sm shrink-0 font-bold">Gratis</span></div><span class="font-body-sm text-body-sm text-on-surface-variant truncate">Proses Perizinan</span></div></div><div class="flex items-center gap-space-xs shrink-0"><button aria-label="Pemberitahuan" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface-variant hover:text-primary transition-colors bg-surface-container-high/40 border border-outline-variant/40"><span class="material-symbols-outlined text-[22px]">notifications</span></button></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-10">
+<!-- Warm Gold Hero Context / Overview Card -->
+<div class="px-margin-mobile pt-space-md">
+<div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#E5C158] via-[#D4AF37] to-[#C9A227] text-[#071C36] p-space-lg shadow-xl border border-primary/40">
+<div class="absolute -right-8 -bottom-8 w-40 h-40 rounded-full bg-white/20 pointer-events-none blur-xl"></div>
+<div class="flex items-center justify-between mb-space-sm flex-wrap gap-2">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-[#071C36]/15 backdrop-blur-md text-[#071C36] border border-[#071C36]/20">
+<span class="material-symbols-outlined text-[16px] text-[#071C36]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm font-bold tracking-wide">OSS &amp; BPJPH Terintegrasi</span>
+</div>
+<span class="font-label-sm text-label-sm text-[#071C36]/80 font-medium">Pembaruan: Hari ini, 09:41 WIB</span>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-[#071C36] font-bold mb-space-xs tracking-tight">
+        Pantau Status Perizinan Usaha
+      </h1>
+<p class="font-body-md text-body-md text-[#071C36]/90 font-medium leading-relaxed">
+        Lacak perkembangan pengajuan berkas legalitas Anda secara real-time tanpa perlu bolak-balik kantor dinas.
+      </p>
+<!-- Mini Live Metric with Gold/Dark Navy Contrast -->
+<div class="mt-space-md grid grid-cols-2 gap-space-sm pt-space-sm border-t border-[#071C36]/20">
+<div class="flex items-center gap-space-sm bg-[#071C36]/10 rounded-lg p-2 backdrop-blur-sm border border-[#071C36]/15">
+<div class="w-9 h-9 rounded-lg bg-[#071C36] flex items-center justify-center text-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[20px]">hourglass_top</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-[#071C36]/80 block font-medium">Sedang Berjalan</span>
+<span class="font-title-md text-title-md text-[#071C36] font-extrabold">2 Berkas</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm bg-[#071C36]/10 rounded-lg p-2 backdrop-blur-sm border border-[#071C36]/15">
+<div class="w-9 h-9 rounded-lg bg-[#071C36] flex items-center justify-center text-primary shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-[#071C36]/80 block font-medium">Tuntas &amp; Aktif</span>
+<span class="font-title-md text-title-md text-[#071C36] font-extrabold">1 Berkas</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive Filter Tabs -->
+<div class="px-margin-mobile mt-space-lg">
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar p-1 bg-[#0b2240] border border-[#1e3d6b] rounded-xl" role="tablist">
+<button class="flex-1 py-2 px-3 rounded-lg font-label-md text-label-md transition-all text-center bg-primary text-[#071C36] shadow-md whitespace-nowrap font-bold" id="tab-all" onclick="filterPermohonan('all')">
+        Semua (3)
+      </button>
+<button class="flex-1 py-2 px-3 rounded-lg font-label-md text-label-md transition-all text-center text-on-surface-variant hover:text-primary whitespace-nowrap" id="tab-process" onclick="filterPermohonan('process')">
+        Sedang Berjalan (2)
+      </button>
+<button class="flex-1 py-2 px-3 rounded-lg font-label-md text-label-md transition-all text-center text-on-surface-variant hover:text-primary whitespace-nowrap" id="tab-done" onclick="filterPermohonan('done')">
+        Selesai (1)
+      </button>
+</div>
+</div>
+<!-- Cards Trackers Container -->
+<div class="px-margin-mobile mt-space-md flex flex-col gap-space-md">
+<!-- Active Tracker Card 1: Sertifikasi Halal -->
+<div class="tracker-card relative bg-[#0b2240] border border-[#1e3d6b] rounded-xl p-space-lg shadow-lg flex flex-col gap-space-md" data-category="process">
+<!-- Decorative top heritage accent bar -->
+<div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary via-tertiary-fixed-dim to-primary rounded-t-xl"></div>
+<!-- Card Header -->
+<div class="flex items-start justify-between gap-space-sm pt-1">
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="px-2 py-0.5 rounded-full bg-primary/20 border border-primary/40 text-primary font-label-sm text-label-sm font-bold">
+              BPJPH Self Declare
+            </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">#HL-2026-UMKM-88412</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-white tracking-tight truncate">
+            Sertifikasi Halal Self Declare
+          </h2>
+<div class="flex items-center gap-1.5 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">storefront</span>
+<span class="font-body-sm text-body-sm font-medium text-slate-200">Dapur Sambal Mak Nyuss</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-[#071c36] border border-[#1e3d6b] flex items-center justify-center text-primary shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[24px]">verified</span>
+</div>
+</div>
+<!-- Live Pendamping Status Badge -->
+<div class="bg-[#081b33] border border-[#1e3d6b]/80 rounded-lg p-space-sm flex items-center gap-space-sm">
+<div class="relative shrink-0">
+<img class="w-10 h-10 rounded-full object-cover shadow-sm ring-1 ring-primary/40" data-alt="Portrait photo of Ust. Ahmad Fauzi, an Indonesian Islamic Halal Process Consultant wearing a soft grey batik shirt and peci, smiling warmly with trustworthy expression against a bright clean office interior" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpnkL0IRhElx_wEGVn5i8PVMcusyQV1AAX6MScnzc37JBY0rzDmSIvhuq2Nb2sV5P8QatbbpWWDRr2iybOKxFhby17SPhk1OWbrhemZH2Atg07jmcklQO16R4hKkU71Sv3fTp_OobAlOWFUeMHbWTFHaOETMxj6xGKGhcmyrDw5sVh3dniLVV1CTWnfnpNbv0XBWRYctJ4waJ1T2v7zBjmaZ1tl2nLbzu88vfbvtSWjOqbFt5mgT7s"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-primary ring-2 ring-[#081b33]"></div>
+</div>
+<div class="min-w-0 flex-1">
+<span class="font-label-sm text-label-sm text-primary font-bold block uppercase tracking-wide">Pendamping PPH Aktif</span>
+<p class="font-body-sm text-body-sm text-white truncate font-semibold">Ust. Ahmad Fauzi (LP3H Jawa Tengah)</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">Tinjauan bahan baku sambal &amp; izin P-IRT</p>
+</div>
+</div>
+<!-- Stepper Visual -->
+<div class="py-space-xs">
+<span class="font-label-md text-label-md text-primary font-bold block mb-space-sm">Tahapan Verifikasi Halal:</span>
+<div class="relative flex flex-col gap-space-md pl-4">
+<!-- Continuous line track -->
+<div class="absolute left-[27px] top-3 bottom-3 w-0.5 bg-[#1e3d6b]"></div>
+<!-- Step 1: Done -->
+<div class="relative flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary text-[#071c36] flex items-center justify-center shrink-0 z-10 shadow font-bold">
+<span class="material-symbols-outlined text-[15px] font-bold">check</span>
+</div>
+<div class="min-w-0 pt-0.5">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-title-md text-title-md text-white font-semibold text-[14px]">Tahap 1: Pengisian Form &amp; Komposisi</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">Selesai ✓</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Unggah 12 bahan dasar &amp; resep terverifikasi</p>
+</div>
+</div>
+<!-- Step 2: In Progress -->
+<div class="relative flex items-start gap-space-sm">
+<div class="w-6 h-6 rounded-full bg-primary text-[#071c36] flex items-center justify-center shrink-0 z-10 shadow-lg ring-4 ring-primary/20">
+<span class="w-2.5 h-2.5 rounded-full bg-[#071c36] animate-pulse"></span>
+</div>
+<div class="min-w-0 pt-0.5">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="font-title-md text-title-md text-primary font-bold text-[14px]">Tahap 2: Verifikasi Pendamping PPH</span>
+<span class="font-label-sm text-label-sm px-1.5 py-0.2 rounded bg-primary/25 border border-primary/40 text-primary font-bold">Hari ke-2</span>
+</div>
+<p class="font-body-sm text-body-sm text-slate-300">Pengecekan kehalalan cabai, terasi bersertifikat &amp; minyak kelapa</p>
+</div>
+</div>
+<!-- Step 3: Upcoming -->
+<div class="relative flex items-start gap-space-sm opacity-60">
+<div class="w-6 h-6 rounded-full bg-[#081b33] border border-[#1e3d6b] text-on-surface-variant flex items-center justify-center shrink-0 z-10">
+<span class="font-label-sm text-label-sm font-semibold">3</span>
+</div>
+<div class="min-w-0 pt-0.5">
+<span class="font-title-md text-title-md text-slate-300 font-medium text-[14px]">Tahap 3: Sidang Fatwa MUI</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Menunggu penetapan sidang komisi fatwa halal</p>
+</div>
+</div>
+<!-- Step 4: Upcoming Output -->
+<div class="relative flex items-start gap-space-sm opacity-60">
+<div class="w-6 h-6 rounded-full bg-[#081b33] border border-[#1e3d6b] text-on-surface-variant flex items-center justify-center shrink-0 z-10">
+<span class="font-label-sm text-label-sm font-semibold">4</span>
+</div>
+<div class="min-w-0 pt-0.5">
+<span class="font-title-md text-title-md text-slate-300 font-medium text-[14px]">Tahap 4: Terbit Sertifikat Digital BPJPH</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Estimasi selesai: 5 hari kerja</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center gap-space-xs pt-space-xs">
+<a class="flex-1 h-11 bg-primary hover:bg-[#ffe08e] transition-colors text-[#071c36] font-bold rounded-lg flex items-center justify-center gap-1.5 font-label-md text-label-md px-3 shadow-md" href="https://wa.me/" target="_blank">
+<span class="material-symbols-outlined text-[18px] text-[#071c36]">chat</span>
+<span>Hubungi Pendamping via WA</span>
+</a>
+<button class="h-11 px-3 bg-[#081b33] hover:bg-[#182a46] border border-[#1e3d6b] transition-colors text-primary rounded-lg flex items-center justify-center gap-1 font-label-md text-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+<span>Rincian</span>
+</button>
+</div>
+</div>
+<!-- Active Tracker Card 2: Pendaftaran Merek -->
+<div class="tracker-card relative bg-[#0b2240] border border-[#1e3d6b] rounded-xl p-space-lg shadow-lg flex flex-col gap-space-md" data-category="process">
+<div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary to-secondary-fixed-dim rounded-t-xl"></div>
+<!-- Card Header -->
+<div class="flex items-start justify-between gap-space-sm pt-1">
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="px-2 py-0.5 rounded-full bg-primary/20 border border-primary/40 text-primary font-label-sm text-label-sm font-bold">
+              Ditjen KI (Kemenkumham)
+            </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">#IPT-2026-0912</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-white tracking-tight truncate">
+            Pendaftaran Merek &amp; Logo
+          </h2>
+<div class="flex items-center gap-1.5 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">copyright</span>
+<span class="font-body-sm text-body-sm font-bold text-slate-100">“Sambal Nyuss Mantap” (Kelas 30)</span>
+</div>
+</div>
+<div class="w-10 h-10 rounded-full bg-[#071c36] border border-[#1e3d6b] flex items-center justify-center text-primary shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[24px]">gavel</span>
+</div>
+</div>
+<!-- Visual Preview Graphic of Logo -->
+<div class="bg-[#081b33] border border-[#1e3d6b]/80 rounded-lg p-space-sm flex items-center gap-space-md">
+<div class="w-14 h-14 rounded-lg bg-surface-container-lowest border border-[#1e3d6b] flex items-center justify-center overflow-hidden shrink-0 shadow-sm">
+<img class="w-full h-full object-contain p-1" data-alt="Traditional Indonesian spicy chili paste logo badge featuring stylized chili peppers and stone mortar cobek with vintage gold and navy typography reading Sambal Nyuss Mantap" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkvxGIPS67AxRJBTasAhYgUiaBs8JYbn4aJudkJbG7_VGd0hAewiQD-W-7IkM9U30_s6E0pRpNytJRpnXkk_ihyF31LgvbOF6RtriCkiWLmOEq7TMbI-rJEDvKHtTvZO1XYfvd8Jg1MhEtPFn_Hty9NIeF_B-Timn_GACs_m-wHRmAOEfynrmEp6zMLK7n9MN0NKsPNbDu45VWDyrdl35n0fVgTAag7oQC-q0PJL3Plkb2Zj70iy0u"/>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center justify-between text-label-sm font-label-sm mb-1">
+<span class="text-on-surface-variant font-medium">Progres Pendaftaran Merek</span>
+<span class="text-primary font-bold">40%</span>
+</div>
+<!-- Progress Bar with Bright Gold Fill -->
+<div class="w-full h-2 rounded-full bg-[#071c36] border border-[#1e3d6b]/70 overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-primary-fixed rounded-full transition-all duration-500 shadow-sm" style="width: 40%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-slate-200 mt-1.5 block font-medium">
+            Tahap Pemeriksaan Formalitas &amp; Masa Publikasi Berita Resmi Merek (BRM)
+          </span>
+</div>
+</div>
+<!-- Time Alert Notice -->
+<div class="flex items-start gap-space-xs px-space-sm py-2 rounded-lg bg-[#081b33] border border-[#1e3d6b]/60 text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-primary mt-0.5 shrink-0">calendar_clock</span>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm font-bold block text-primary">Masa Pengumuman Publik: 2 Bulan</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Jika dalam 60 hari kerja tidak ada sanggahan dari pihak lain, sertifikat merek resmi diterbitkan secara otomatis.
+          </p>
+</div>
+</div>
+<!-- Action -->
+<div class="pt-space-xs">
+<button class="w-full h-11 bg-[#081b33] hover:bg-[#182a46] border border-[#1e3d6b] transition-colors text-primary font-label-md text-label-md font-bold rounded-lg flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>Lihat Bukti Penerimaan Permohonan (BPP)</span>
+</button>
+</div>
+</div>
+<!-- Completed Permohonan Card 3: NIB OSS-RBA -->
+<div class="tracker-card relative bg-[#0b2240] border border-[#1e3d6b] rounded-xl p-space-lg shadow-lg flex flex-col gap-space-md" data-category="done">
+<!-- Top Success Accent Bar in Gold -->
+<div class="absolute top-0 left-0 right-0 h-1.5 bg-primary rounded-t-xl"></div>
+<!-- Card Header -->
+<div class="flex items-start justify-between gap-space-sm pt-1">
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-space-xs flex-wrap mb-1">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 border border-primary/40 text-primary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+              Terbit &amp; Aktif Seumur Hidup
+            </span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-white tracking-tight truncate">
+            Nomor Induk Berusaha (NIB) OSS-RBA
+          </h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Kementerian Investasi / BKPM RI</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center text-primary shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[24px]">verified_user</span>
+</div>
+</div>
+<!-- License Summary Box with QR Code Simulation -->
+<div class="bg-[#081b33] border border-[#1e3d6b]/80 rounded-xl p-space-md flex items-center justify-between gap-space-md">
+<div class="min-w-0 flex-1">
+<div class="mb-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase font-medium">Nomor Legalitas Usaha</span>
+<span class="font-title-md text-title-md text-primary font-bold tracking-wider font-mono">0220260019481</span>
+</div>
+<div class="pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Klasifikasi KBLI Utama:</span>
+<p class="font-body-sm text-body-sm text-slate-200 font-semibold truncate">
+              10799 - Industri Bumbu Masak &amp; Penyedap
+            </p>
+</div>
+</div>
+<!-- Simulated Official QR Validation -->
+<div class="w-16 h-16 bg-[#000e24] border border-primary/30 rounded-lg p-1.5 shrink-0 flex flex-col items-center justify-center shadow-sm text-center">
+<svg class="w-full h-full text-primary" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 48 48">
+<rect fill="currentColor" fill-opacity="0.1" height="16" rx="2" width="16" x="4" y="4"></rect>
+<rect fill="currentColor" height="8" width="8" x="8" y="8"></rect>
+<rect fill="currentColor" fill-opacity="0.1" height="16" rx="2" width="16" x="28" y="4"></rect>
+<rect fill="currentColor" height="8" width="8" x="32" y="8"></rect>
+<rect fill="currentColor" fill-opacity="0.1" height="16" rx="2" width="16" x="4" y="28"></rect>
+<rect fill="currentColor" height="8" width="8" x="8" y="32"></rect>
+<path d="M28 28h6v6h-6zM38 28h6v16h-6zM28 38h6v6h-6z" fill="currentColor"></path>
+</svg>
+<span class="font-label-sm text-[9px] text-primary font-bold mt-0.5">OSS Valid</span>
+</div>
+</div>
+<!-- Action Group with Gold Primary Button -->
+<div class="flex flex-col gap-space-xs pt-1">
+<button class="w-full h-11 bg-primary hover:bg-[#ffe08e] transition-colors text-[#071C36] font-label-md text-label-md font-extrabold rounded-lg flex items-center justify-center gap-2 shadow-md" type="button">
+<span class="material-symbols-outlined text-[20px] font-bold">download</span>
+<span>Unduh Sertifikat NIB Lengkap (PDF)</span>
+</button>
+<div class="grid grid-cols-2 gap-space-xs">
+<button class="h-10 bg-[#081b33] hover:bg-[#182a46] border border-[#1e3d6b] transition-colors text-slate-200 hover:text-white font-label-md text-label-md font-semibold rounded-lg flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">forward_to_inbox</span>
+<span>Kirim ke Email / WA</span>
+</button>
+<button class="h-10 bg-[#081b33] hover:bg-[#182a46] border border-[#1e3d6b] transition-colors text-slate-200 hover:text-white font-label-md text-label-md font-semibold rounded-lg flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">qr_code_scanner</span>
+<span>Cetak QR Pasang</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pro Bono Help Banner (Bantuan Revisi & Pendampingan) -->
+<div class="px-margin-mobile mt-space-lg">
+<div class="bg-[#0b2240] border border-[#1e3d6b] rounded-xl p-space-md flex items-start gap-space-md shadow-lg">
+<div class="w-12 h-12 rounded-xl bg-primary text-[#071c36] flex items-center justify-center shrink-0 shadow-md font-bold">
+<span class="material-symbols-outlined text-[26px]">balance</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5 mb-1 flex-wrap">
+<h3 class="font-headline-sm text-[17px] text-white font-bold">Jaminan Bebas Revisi</h3>
+<span class="px-1.5 py-0.5 rounded bg-primary/20 border border-primary/40 text-primary font-label-sm text-label-sm font-bold">100% Gratis</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          Berkas Anda ditolak dinas atau butuh perbaikan teknis? Tenang, advokat pendamping kami akan bantu revisi sampai tuntas tanpa dipungut biaya sepeserpun.
+        </p>
+<div class="mt-space-sm">
+<button class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-bold hover:underline" type="button">
+<span>Konsultasi Perbaikan Berkas</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Spacing helper -->
+<div class="h-6"></div>
+</div>
+<script>
+  function filterPermohonan(type) {
+    const cards = document.querySelectorAll('.tracker-card');
+    const tabAll = document.getElementById('tab-all');
+    const tabProcess = document.getElementById('tab-process');
+    const tabDone = document.getElementById('tab-done');
+
+    // Reset tab active classes for dark theme
+    [tabAll, tabProcess, tabDone].forEach(tab => {
+      tab.classList.remove('bg-primary', 'text-[#071C36]', 'shadow-md', 'font-bold');
+      tab.classList.add('text-on-surface-variant');
+    });
+
+    if (type === 'all') {
+      tabAll.classList.add('bg-primary', 'text-[#071C36]', 'shadow-md', 'font-bold');
+      tabAll.classList.remove('text-on-surface-variant');
+      cards.forEach(card => card.classList.remove('hidden'));
+    } else if (type === 'process') {
+      tabProcess.classList.add('bg-primary', 'text-[#071C36]', 'shadow-md', 'font-bold');
+      tabProcess.classList.remove('text-on-surface-variant');
+      cards.forEach(card => {
+        if (card.getAttribute('data-category') === 'process') {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    } else if (type === 'done') {
+      tabDone.classList.add('bg-primary', 'text-[#071C36]', 'shadow-md', 'font-bold');
+      tabDone.classList.remove('text-on-surface-variant');
+      cards.forEach(card => {
+        if (card.getAttribute('data-category') === 'done') {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-[#071c36]/95 backdrop-blur-xl border-t border-[#1e3d6b]/70 shadow-[0_-4px_16px_rgba(0,0,0,0.4)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[64px] h-12 text-on-surface-variant hover:text-primary transition-colors" data-path="beranda" href="#"><span class="material-symbols-outlined text-[24px]">storefront</span><span class="font-label-sm text-label-sm tracking-tight mt-0.5">Beranda</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 text-on-surface-variant hover:text-primary transition-colors" data-path="layanan" href="#"><span class="material-symbols-outlined text-[24px]">assignment</span><span class="font-label-sm text-label-sm tracking-tight mt-0.5">Layanan</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] h-12 transition-colors text-primary font-bold" data-path="proses" href="#"><span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">history_edu</span><span class="font-label-sm text-label-sm tracking-tight mt-0.5 font-bold">Proses</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 text-on-surface-variant hover:text-primary transition-colors" data-path="konsul-gratis" href="#"><span class="material-symbols-outlined text-[24px]">forum</span><span class="font-label-sm text-label-sm tracking-tight mt-0.5">Konsul Gratis</span></a></div></nav></body></html>

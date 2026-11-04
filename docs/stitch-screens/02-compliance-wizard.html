@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Legalyst - Interactive Compliance Wizard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline": "#73777f",
+            "surface-bright": "#f7f9fb",
+            "on-tertiary-fixed-variant": "#584400",
+            "on-surface": "#191c1e",
+            "on-secondary-fixed-variant": "#005323",
+            "secondary-fixed-dim": "#79db8d",
+            "secondary-container": "#92f5a4",
+            "on-tertiary-fixed": "#241a00",
+            "background": "#f7f9fb",
+            "on-primary-fixed": "#001c37",
+            "inverse-surface": "#2d3133",
+            "surface-variant": "#e0e3e5",
+            "surface-container-high": "#e6e8ea",
+            "inverse-primary": "#a8c9f5",
+            "surface-tint": "#406087",
+            "on-secondary-container": "#007233",
+            "surface-dim": "#d8dadc",
+            "tertiary-fixed-dim": "#ecc246",
+            "on-error": "#ffffff",
+            "on-background": "#191c1e",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary": "#ffffff",
+            "on-tertiary": "#ffffff",
+            "secondary": "#006d30",
+            "on-tertiary-container": "#4f3d00",
+            "on-error-container": "#93000a",
+            "on-surface-variant": "#43474e",
+            "error-container": "#ffdad6",
+            "error": "#ba1a1a",
+            "outline-variant": "#c3c6cf",
+            "secondary-fixed": "#95f8a7",
+            "surface": "#f7f9fb",
+            "primary": "#002444",
+            "tertiary-fixed": "#ffe08e",
+            "primary-fixed": "#d2e4ff",
+            "inverse-on-surface": "#eff1f3",
+            "on-primary": "#ffffff",
+            "tertiary": "#755b00",
+            "primary-fixed-dim": "#a8c9f5",
+            "tertiary-container": "#cea72c",
+            "on-primary-container": "#84a4cf",
+            "surface-container-highest": "#e0e3e5",
+            "on-primary-fixed-variant": "#27486e",
+            "surface-container-low": "#f2f4f6",
+            "surface-container": "#eceef0",
+            "primary-container": "#163a5f",
+            "on-secondary-fixed": "#00210a"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "margin-tablet": "1.5rem",
+            "gutter": "1rem",
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "gutter-sm": "0.75rem"
+          },
+          "fontFamily": {
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "label-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "headline-xl-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "title-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased min-h-full flex flex-col selection:bg-primary-container selection:text-white">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 bg-surface dark:bg-surface-container border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center w-full px-gutter h-[64px] max-w-[640px] mx-auto">
+<div class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary dark:text-inverse-primary flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-[24px]">balance</span>
+<span>Legalyst</span>
+</div>
+<div class="flex items-center gap-space-sm text-on-surface-variant">
+<span class="text-body-sm text-on-surface-variant">Co-Pilot Kepatuhan UMKM</span>
+<button class="p-space-xs rounded-lg hover:bg-surface-container-high transition-colors active:scale-95">
+<span class="material-symbols-outlined text-[24px]">help_outline</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Canvas Content -->
+<main class="flex-1 w-full max-w-[640px] mx-auto px-gutter pt-[80px] pb-[96px] flex flex-col gap-space-md">
+<!-- Progress Stepper -->
+<div class="bg-white border border-outline-variant/60 rounded-xl p-space-md shadow-[0px_1px_3px_rgba(15,23,42,0.04)]">
+<div class="flex items-center justify-between relative">
+<div class="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] bg-surface-variant z-0"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center relative z-10 bg-white px-2">
+<div class="w-8 h-8 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-label-md">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<span class="text-label-sm text-secondary mt-1">Profil Usaha</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center relative z-10 bg-white px-2">
+<div class="w-8 h-8 rounded-full bg-primary-container text-white flex items-center justify-center font-label-md shadow-sm">
+            2
+          </div>
+<span class="text-label-sm text-primary font-bold mt-1">Checklist</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center relative z-10 bg-white px-2">
+<div class="w-8 h-8 rounded-full bg-surface-variant text-outline flex items-center justify-center font-label-md">
+            3
+          </div>
+<span class="text-label-sm text-outline mt-1">Dokumen</span>
+</div>
+</div>
+</div>
+<!-- Banner Ringkasan Usaha -->
+<div class="bg-surface-container-low border border-outline-variant/60 rounded-xl p-space-md flex items-start gap-space-sm shadow-[0px_1px_3px_rgba(15,23,42,0.04)]">
+<div class="p-2 rounded-lg bg-primary-fixed text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">storefront</span>
+</div>
+<div class="flex-1">
+<h3 class="font-title-sm text-title-sm text-on-surface">KBLI 10794: Industri Kerupuk & Keripik</h3>
+<p class="text-body-sm text-on-surface-variant mt-0.5">Skala Mikro • Sleman, DIY</p>
+</div>
+</div>
+<!-- Banner Disclaimer Hukum (Wajib) -->
+<div class="bg-[#FEF9C3] border border-[#FEF08A] rounded-xl p-space-md flex items-start gap-space-sm shadow-[0px_1px_3px_rgba(15,23,42,0.04)]">
+<span class="material-symbols-outlined text-[#854D0E] text-[20px] mt-0.5">warning</span>
+<p class="text-body-sm text-[#854D0E] leading-relaxed">
+        Legalyst adalah co-pilot panduan kepatuhan mandiri, bukan pengganti nasihat hukum resmi.
+      </p>
+</div>
+<!-- Section Header -->
+<div class="flex items-center justify-between mt-2">
+<h2 class="font-title-md text-title-md text-on-surface">Daftar Kewajiban Hukum</h2>
+<span class="text-label-md text-on-surface-variant">4 Regulasi</span>
+</div>
+<!-- Daftar Kewajiban Hukum -->
+<div class="flex flex-col gap-space-md">
+<!-- Item 1: NIB -->
+<div class="bg-white border border-outline-variant/60 rounded-xl p-space-md shadow-[0px_1px_3px_rgba(15,23,42,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-1 w-6 h-6 rounded border-outline-variant text-primary-container focus:ring-primary-container cursor-pointer" type="checkbox"/>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Nomor Induk Berusaha (NIB)</h4>
+<div class="flex flex-wrap gap-2 mt-1.5">
+<span class="bg-surface-container text-primary border border-outline-variant/50 px-2.5 py-0.5 rounded-full text-label-sm font-medium">[PP No. 5/2021 Ps. 12]</span>
+<span class="bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] px-2.5 py-0.5 rounded-full text-label-sm font-medium">Wajib Terbit Cepat (Risiko Rendah)</span>
+</div>
+</div>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant pl-8">Identitas legal tunggal pelaku usaha mikro.</p>
+</div>
+<!-- Item 2: Izin Edar PIRT -->
+<div class="bg-white border border-outline-variant/60 rounded-xl p-space-md shadow-[0px_1px_3px_rgba(15,23,42,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-1 w-6 h-6 rounded border-outline-variant text-primary-container focus:ring-primary-container cursor-pointer" type="checkbox"/>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Izin Edar PIRT (Dinas Kesehatan)</h4>
+<div class="flex flex-wrap gap-2 mt-1.5">
+<span class="bg-surface-container text-primary border border-outline-variant/50 px-2.5 py-0.5 rounded-full text-label-sm font-medium">[PerBPOM No. 22/2021 & PP 5/2021]</span>
+<span class="bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] px-2.5 py-0.5 rounded-full text-label-sm font-medium">Wajib Pangan Kering</span>
+</div>
+</div>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant pl-8">Standar higienis olahan pangan keripik dengan ketahanan >7 hari.</p>
+</div>
+<!-- Item 3: Sertifikasi Halal -->
+<div class="bg-white border border-outline-variant/60 rounded-xl p-space-md shadow-[0px_1px_3px_rgba(15,23,42,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-1 w-6 h-6 rounded border-outline-variant text-primary-container focus:ring-primary-container cursor-pointer" type="checkbox"/>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Sertifikasi Halal Self-Declare (BPJPH)</h4>
+<div class="flex flex-wrap gap-2 mt-1.5">
+<span class="bg-surface-container text-primary border border-outline-variant/50 px-2.5 py-0.5 rounded-full text-label-sm font-medium">[UU No. 33/2014 & PP 42/2024]</span>
+<span class="bg-[#DCFCE7] text-[#15803D] border border-[#BBF7D0] px-2.5 py-0.5 rounded-full text-label-sm font-medium">Wajib Produk Makanan</span>
+</div>
+</div>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant pl-8">Jalur pernyataan mandiri pelaku usaha mikro tanpa biaya (SEHATI).</p>
+</div>
+<!-- Item 4: Edge Case BPOM MD -->
+<div class="bg-white border border-outline-variant/60 rounded-xl p-space-md shadow-[0px_1px_3px_rgba(15,23,42,0.04)] flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<input class="mt-1 w-6 h-6 rounded border-outline-variant text-primary-container focus:ring-primary-container cursor-pointer" type="checkbox"/>
+<div>
+<h4 class="font-title-sm text-title-sm text-on-surface">Izin Edar BPOM MD</h4>
+<div class="flex flex-wrap gap-2 mt-1.5">
+<span class="bg-surface-container text-primary border border-outline-variant/50 px-2.5 py-0.5 rounded-full text-label-sm font-medium">[UU Pangan No. 18/2012]</span>
+<span class="bg-[#FEF9C3] text-[#854D0E] border border-[#FEF08A] px-2.5 py-0.5 rounded-full text-label-sm font-medium">[⚠️ Perlu Verifikasi Manual]</span>
+</div>
+</div>
+</div>
+</div>
+<p class="text-body-sm text-on-surface-variant pl-8">Selama skala mikro rumah tangga cukup PIRT. Verifikasi manual jika ada bahan pengawet khusus.</p>
+</div>
+</div>
+<!-- Action Button -->
+<div class="mt-4">
+<button class="w-full h-[52px] bg-primary-container hover:bg-[#0E2843] active:scale-95 text-white font-label-lg rounded-xl flex items-center justify-center gap-space-sm transition-all shadow-sm" onclick="alert('Dokumen kepatuhan sedang disiapkan...')">
+<span>Generate Dokumen Kepatuhan Saya</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter py-space-xs max-w-[640px] mx-auto bg-surface dark:bg-surface-container border-t border-outline-variant dark:border-outline shadow-[0px_-4px_16px_rgba(15,23,42,0.08)]">
+<!-- Tab 1 -->
+<a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] py-space-xs text-on-surface-variant dark:text-outline font-normal hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">storefront</span>
+<span class="text-label-md mt-0.5">Profil Usaha</span>
+</a>
+<!-- Tab 2 (Active) -->
+<a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] py-space-xs text-primary dark:text-inverse-primary font-semibold hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">fact_check</span>
+<span class="text-label-md mt-0.5">Checklist</span>
+</a>
+<!-- Tab 3 -->
+<a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] py-space-xs text-on-surface-variant dark:text-outline font-normal hover:bg-surface-container dark:hover:bg-surface-container-high rounded-lg transition-colors duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined text-[24px]">description</span>
+<span class="text-label-md mt-0.5">Dokumen</span>
+</a>
+</nav>
+</body></html>
