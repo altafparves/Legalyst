@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Legalyst - Smart Onboarding &amp; Profiler Usaha</title>
+<!-- Google Fonts: Plus Jakarta Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary-fixed": "#241a00",
+            "on-primary": "#ffffff",
+            "on-background": "#191c1e",
+            "tertiary-container": "#cea72c",
+            "on-secondary-container": "#007233",
+            "surface": "#f7f9fb",
+            "primary": "#002444",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#ecc246",
+            "surface-tint": "#406087",
+            "on-surface-variant": "#43474e",
+            "on-primary-fixed-variant": "#27486e",
+            "on-tertiary": "#ffffff",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-low": "#f2f4f6",
+            "inverse-surface": "#2d3133",
+            "surface-container": "#eceef0",
+            "outline": "#73777f",
+            "primary-fixed": "#d2e4ff",
+            "on-tertiary-fixed-variant": "#584400",
+            "on-primary-container": "#84a4cf",
+            "inverse-on-surface": "#eff1f3",
+            "tertiary": "#755b00",
+            "on-secondary-fixed-variant": "#005323",
+            "on-primary-fixed": "#001c37",
+            "surface-variant": "#e0e3e5",
+            "surface-dim": "#d8dadc",
+            "on-surface": "#191c1e",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#4f3d00",
+            "on-error": "#ffffff",
+            "tertiary-fixed": "#ffe08e",
+            "background": "#f7f9fb",
+            "surface-bright": "#f7f9fb",
+            "primary-fixed-dim": "#a8c9f5",
+            "surface-container-lowest": "#ffffff",
+            "inverse-primary": "#a8c9f5",
+            "outline-variant": "#c3c6cf",
+            "on-secondary-fixed": "#00210a",
+            "secondary": "#006d30",
+            "on-error-container": "#93000a",
+            "secondary-fixed": "#95f8a7",
+            "surface-container-highest": "#e0e3e5",
+            "secondary-fixed-dim": "#79db8d",
+            "primary-container": "#163a5f",
+            "secondary-container": "#92f5a4",
+            "on-secondary": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "gutter-sm": "0.75rem",
+            "space-lg": "1.5rem",
+            "margin": "1rem",
+            "margin-tablet": "1.5rem",
+            "space-xs": "0.25rem",
+            "gutter": "1rem"
+          },
+          "fontFamily": {
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-md": ["Plus Jakarta Sans"],
+            "body-lg": ["Plus Jakarta Sans"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "title-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "title-md": ["Plus Jakarta Sans"],
+            "body-sm": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "500" }],
+            "headline-lg-mobile": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-xl": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "title-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "title-md": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md antialiased min-h-screen flex flex-col justify-between items-center selection:bg-primary-fixed selection:text-primary">
+<!-- Outer Mobile Container: Strictly 390px/640px centered screen viewport -->
+<div class="w-full max-w-[640px] md:max-w-[420px] bg-background min-h-screen relative flex flex-col shadow-xl">
+<!-- Top Navigation Header -->
+<header class="sticky top-0 z-40 bg-surface border-b border-outline-variant shadow-sm w-full">
+<div class="flex justify-between items-center w-full px-gutter h-[64px] max-w-[640px] mx-auto">
+<!-- Leading: Brand and Icon -->
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-tertiary-container shadow-sm">
+<span class="material-symbols-outlined text-[24px]" data-icon="balance">balance</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="text-headline-lg-mobile font-bold text-primary tracking-tight">Legalyst</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-label-sm font-semibold text-primary">
+<span class="text-[10px]">🇮🇩</span> OSS-RBA
+</span>
+</div>
+<span class="font-body-sm text-on-surface-variant font-medium -mt-0.5">Co-Pilot Kepatuhan UMKM</span>
+</div>
+</div>
+<!-- Trailing: Help/Support Action -->
+<button aria-label="Bantuan Panduan" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="help_outline">help_outline</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-gutter pt-space-md pb-28 flex flex-col gap-space-lg">
+<!-- 3-Step Horizontal Stepper -->
+<section aria-label="Progress Alur Kepatuhan" class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm">
+<div class="flex items-center justify-between relative">
+<!-- Step 1: Active -->
+<div class="flex flex-col items-center z-10 gap-1 flex-1">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-title-sm ring-4 ring-primary-fixed">
+1
+</div>
+<span class="font-label-md text-primary font-bold text-center">Profil Usaha</span>
+</div>
+<!-- Connector 1-2 -->
+<div class="h-[2px] bg-outline-variant flex-1 -mt-5"></div>
+<!-- Step 2: Inactive -->
+<div class="flex flex-col items-center z-10 gap-1 flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-container border border-outline text-outline flex items-center justify-center font-title-sm">
+2
+</div>
+<span class="font-label-md text-outline font-medium text-center">Checklist</span>
+</div>
+<!-- Connector 2-3 -->
+<div class="h-[2px] bg-outline-variant flex-1 -mt-5"></div>
+<!-- Step 3: Inactive -->
+<div class="flex flex-col items-center z-10 gap-1 flex-1">
+<div class="w-8 h-8 rounded-full bg-surface-container border border-outline text-outline flex items-center justify-center font-title-sm">
+3
+</div>
+<span class="font-label-md text-outline font-medium text-center">Dokumen</span>
+</div>
+</div>
+</section>
+<!-- Section: Input Profil Usaha -->
+<section class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant shadow-sm flex flex-col gap-space-md">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="edit_note">edit_note</span>
+<h1 class="font-title-md text-primary font-bold">Ceritakan Usaha Anda</h1>
+</div>
+<p class="font-body-sm text-on-surface-variant leading-relaxed">
+Tuliskan produk atau jasa yang Anda jual dalam bahasa sehari-hari. Kami bantu petakan kode KBLI 2020 resminya.
+</p>
+</div>
+<!-- Textarea Container -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-md text-on-surface font-semibold flex justify-between items-center" for="business-desc">
+<span>Deskripsi Aktivitas Usaha</span>
+<span class="text-tertiary font-medium flex items-center gap-1 text-[12px]">
+<span class="material-symbols-outlined text-[14px]" data-icon="auto_awesome">auto_awesome</span> Didukung AI OSS
+</span>
+</label>
+<div class="relative">
+<textarea class="w-full rounded-lg border border-outline-variant bg-surface p-3 font-body-md text-on-surface placeholder:text-outline focus:border-2 focus:border-primary-container focus:bg-surface-container-lowest focus:outline-none transition-all resize-none shadow-inner" id="business-desc" placeholder="Contoh: Saya menjual sambal kemasan botol olahan sendiri..." rows="4">Saya memproduksi keripik pisang aneka rasa (cokelat, gurih) dari dapur rumah dan menjualnya ke warung sekitar serta toko oleh-oleh. Ada 2 pekerja.</textarea>
+</div>
+<div class="flex items-center justify-between text-outline">
+<span class="font-label-sm">Sebutkan bahan baku, proses, dan lokasi penjualan</span>
+<span class="font-label-sm font-medium">138 / 300 kata</span>
+</div>
+</div>
+<!-- Quick Suggestion Chips -->
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-on-surface-variant font-medium">Contoh usaha siap pakai:</span>
+<div class="flex flex-wrap gap-2">
+<button class="min-h-[40px] px-3.5 py-1.5 rounded-full border border-primary-container bg-primary-fixed text-primary font-label-md flex items-center gap-1.5 transition-all shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="check" data-weight="fill">check</span>
+Keripik &amp; Snack Rumahan
+</button>
+<button class="min-h-[40px] px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high font-label-md flex items-center gap-1.5 transition-all" type="button">
+Kedai Kopi &amp; Minuman
+</button>
+<button class="min-h-[40px] px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high font-label-md flex items-center gap-1.5 transition-all" type="button">
+Katering Makanan
+</button>
+<button class="min-h-[40px] px-3.5 py-1.5 rounded-full border border-outline-variant bg-surface-container-low text-on-surface-variant hover:bg-surface-container-high font-label-md flex items-center gap-1.5 transition-all" type="button">
+Toko Kelontong
+</button>
+</div>
+</div>
+<!-- Action Button: Trigger NLP Profiler -->
+<button class="w-full min-h-[52px] bg-primary-container hover:bg-primary text-on-primary font-label-lg font-bold rounded-xl shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all duration-150" type="button">
+<span class="material-symbols-outlined text-[20px] text-tertiary-fixed" data-icon="auto_awesome">auto_awesome</span>
+<span>Analisis Kode KBLI Saya</span>
+</button>
+</section>
+<!-- Section: KBLI Recommendations -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between px-1">
+<div>
+<h2 class="font-title-md font-bold text-primary">Hasil Pencocokan KBLI 2020</h2>
+<p class="font-body-sm text-on-surface-variant">Sesuai Klasifikasi Baku Lapangan Usaha Indonesia</p>
+</div>
+<span class="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-container-high border border-outline-variant font-label-sm text-primary font-semibold">
+3 ditemukan
+</span>
+</div>
+<!-- Recommendation List / Bento Cards -->
+<div class="flex flex-col gap-3 mt-1">
+<!-- Card 1: Primary Recommended -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md border-2 border-primary-container shadow-md relative transition-all">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full border-2 border-primary-container flex items-center justify-center bg-primary-container text-on-primary shrink-0">
+<div class="w-2.5 h-2.5 rounded-full bg-on-primary"></div>
+</div>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm font-bold border border-secondary-fixed">
+<span class="material-symbols-outlined text-[14px]" data-icon="verified" data-weight="fill">verified</span>
+Kecocokan 94% (Sangat Cocok)
+</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm font-bold shrink-0">
+Pilihan Utama
+</span>
+</div>
+<!-- Code & Title -->
+<div class="mt-2 pl-8">
+<h3 class="font-title-sm font-bold text-primary leading-snug">
+KBLI 10794: Industri Kerupuk, Keripik, Peyek dan Sejenisnya
+</h3>
+<!-- Risk Badge -->
+<div class="flex items-center gap-2 my-2">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container border border-outline-variant font-label-sm text-secondary font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+Risiko Rendah (Perizinan Cepat OSS)
+</span>
+</div>
+<!-- Scope Description -->
+<p class="font-body-sm text-on-surface-variant bg-surface-container-low p-2.5 rounded-lg border border-outline-variant leading-relaxed">
+Mencakup pembuatan keripik buah, keripik umbi, dan camilan kering sejenis dari skala mikro hingga menengah.
+</p>
+<!-- Mini Benefits Checklist Preview -->
+<div class="flex items-center gap-4 mt-3 font-label-sm">
+<span class="flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span> NIB Langsung Terbit
+</span>
+<span class="flex items-center gap-1 text-secondary font-medium">
+<span class="material-symbols-outlined text-[16px]" data-icon="check_circle">check_circle</span> SPP-IRT Mandiri
+</span>
+</div>
+</div>
+</div>
+<!-- Card 2: Alternative 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant hover:border-outline shadow-sm relative transition-all">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center bg-surface shrink-0"></div>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm font-semibold">
+Kecocokan 78%
+</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-secondary font-label-sm font-semibold shrink-0">
+Risiko Rendah
+</span>
+</div>
+<div class="mt-1 pl-8">
+<h3 class="font-title-sm font-bold text-on-surface leading-snug">
+KBLI 47241: Perdagangan Eceran Makanan dan Minuman di Toko
+</h3>
+<p class="font-body-sm text-on-surface-variant mt-1.5 leading-relaxed">
+Mencakup usaha penjualan ritel makanan olahan dalam kemasan secara langsung ke konsumen akhir.
+</p>
+</div>
+</div>
+<!-- Card 3: Alternative 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md border border-outline-variant hover:border-outline shadow-sm relative transition-all">
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex items-center gap-2.5">
+<div class="w-6 h-6 rounded-full border-2 border-outline-variant flex items-center justify-center bg-surface shrink-0"></div>
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm font-semibold">
+Kecocokan 62%
+</span>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-tertiary font-label-sm font-semibold shrink-0">
+Risiko Menengah
+</span>
+</div>
+<div class="mt-1 pl-8">
+<h3 class="font-title-sm font-bold text-on-surface leading-snug">
+KBLI 56210: Jasa Boga Untuk Suatu Event Tertentu (Katering)
+</h3>
+<p class="font-body-sm text-on-surface-variant mt-1.5 leading-relaxed">
+Mencakup penyediaan jasa makanan atas dasar kontrak pesanan untuk acara pernikahan, rapat, dan pesta.
+</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Primary Next Step & Alternative Flow -->
+<section class="flex flex-col gap-3 pt-2">
+<button class="w-full min-h-[52px] bg-primary-container hover:bg-primary text-on-primary font-label-lg font-bold rounded-xl shadow-md flex items-center justify-center gap-2 active:scale-95 transition-all" type="button">
+<span>Gunakan KBLI Ini &amp; Buat Checklist Kepatuhan</span>
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<a class="min-h-[44px] flex items-center justify-center font-label-md text-primary hover:text-on-primary-fixed-variant font-semibold underline decoration-outline-variant underline-offset-4 active:scale-95 transition-all" href="#manual-kbli">
+Kode KBLI tidak sesuai? Cari manual
+</a>
+</section>
+<!-- Legal Disclaimer Card -->
+<aside aria-label="Disclaimer Hukum" class="bg-surface-container-low border border-outline-variant rounded-xl p-3.5 flex items-start gap-2.5">
+<span class="material-symbols-outlined text-outline text-[20px] shrink-0 mt-0.5" data-icon="info">info</span>
+<p class="font-body-sm text-on-surface-variant leading-relaxed">
+<strong>Catatan:</strong> Legalyst adalah co-pilot panduan kepatuhan mandiri, bukan nasihat hukum formal. Keputusan akhir perizinan diterbitkan melalui sistem resmi OSS-RBA Kementerian Investasi/BKPM.
+</p>
+</aside>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav aria-label="Navigasi Utama" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-gutter py-space-xs max-w-[640px] md:max-w-[420px] mx-auto bg-surface border-t border-outline-variant shadow-[0px_-4px_16px_rgba(15,23,42,0.08)]">
+<!-- Tab 1: Profil Usaha (Active) -->
+<a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] py-space-xs text-primary font-semibold hover:bg-surface-container rounded-lg transition-colors duration-150 active:scale-95" href="#profil">
+<span class="material-symbols-outlined text-[24px]" data-icon="storefront" data-weight="fill">storefront</span>
+<span class="font-label-md mt-0.5">Profil Usaha</span>
+</a>
+<!-- Tab 2: Checklist (Inactive) -->
+<a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] py-space-xs text-on-surface-variant font-normal hover:bg-surface-container rounded-lg transition-colors duration-150 active:scale-95" href="#checklist">
+<span class="material-symbols-outlined text-[24px]" data-icon="fact_check">fact_check</span>
+<span class="font-label-md mt-0.5">Checklist</span>
+</a>
+<!-- Tab 3: Dokumen (Inactive) -->
+<a class="flex flex-col items-center justify-center min-w-[64px] min-h-[48px] py-space-xs text-on-surface-variant font-normal hover:bg-surface-container rounded-lg transition-colors duration-150 active:scale-95" href="#dokumen">
+<span class="material-symbols-outlined text-[24px]" data-icon="description">description</span>
+<span class="font-label-md mt-0.5">Dokumen</span>
+</a>
+</nav>
+</div>
+</body></html>

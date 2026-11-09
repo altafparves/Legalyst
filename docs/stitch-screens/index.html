@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legalyst P0 Screens Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col">
+  <!-- Top Navigation Header -->
+  <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 flex flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 font-bold text-lg">⚖️</div>
+      <div>
+        <h1 class="font-bold text-lg text-white">Legalyst UI/UX P0 Preview</h1>
+        <p class="text-xs text-slate-400">Desain Kanonik Sesuai Revisi 11 Poin • Siap Slicing ke Next.js</p>
+      </div>
+    </div>
+    
+    <!-- Screen Switcher Tabs -->
+    <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-700">
+      <button onclick="switchScreen('01-smart-onboarding-profiler.html', this)" class="screen-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-blue-600 text-white shadow">
+        1. Smart Onboarding
+      </button>
+      <button onclick="switchScreen('02-compliance-wizard.html', this)" class="screen-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white">
+        2. Compliance Wizard
+      </button>
+      <button onclick="switchScreen('03-auto-document-generator.html', this)" class="screen-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white">
+        3. Auto-Document
+      </button>
+    </div>
+
+    <!-- Direct Links -->
+    <div class="flex items-center gap-2">
+      <a id="openTabBtn" href="01-smart-onboarding-profiler.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-xs text-white flex items-center gap-1.5 transition">
+        <span>Buka Tab Penuh ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Showcase Area with Mobile Frame -->
+  <main class="flex-1 flex flex-col items-center justify-center p-6">
+    <div class="relative w-full max-w-[420px] bg-slate-950 rounded-[48px] p-3 shadow-2xl border-4 border-slate-700 ring-1 ring-slate-600/50">
+      <!-- Phone Speaker / Dynamic Island Notch -->
+      <div class="absolute top-5 left-1/2 -translate-x-1/2 w-28 h-4 bg-slate-800 rounded-full z-20"></div>
+      
+      <!-- Frame Iframe -->
+      <div class="w-full h-[844px] rounded-[36px] overflow-hidden bg-white relative">
+        <iframe id="previewFrame" src="01-smart-onboarding-profiler.html" class="w-full h-full border-0"></iframe>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function switchScreen(file, btn) {
+      document.getElementById('previewFrame').src = file;
+      document.getElementById('openTabBtn').href = file;
+      document.querySelectorAll('.screen-tab').forEach(t => {
+        t.className = 'screen-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all text-slate-400 hover:text-white';
+      });
+      btn.className = 'screen-tab px-4 py-2 rounded-lg text-sm font-semibold transition-all bg-blue-600 text-white shadow';
+    }
+  </script>
+</body>
+</html>
+
