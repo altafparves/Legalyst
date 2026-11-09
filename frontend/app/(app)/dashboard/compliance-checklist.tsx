@@ -35,7 +35,7 @@ export function ComplianceChecklist() {
   const [obligations, setObligations] = useState<Obligation[]>([]);
   const [done, setDone] = useState<Set<string>>(new Set());
 
-  const kode = profile?.kbli.kode;
+  const kode = profile?.kbli.code;
   const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
@@ -105,9 +105,9 @@ export function ComplianceChecklist() {
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 flex-wrap">
               <span className="font-bold text-sm text-foreground">
-                KBLI {profile.kbli.kode}: {profile.kbli.judul}
+                KBLI {profile.kbli.code}: {profile.kbli.title}
               </span>
-              <span className="rounded-md bg-blue-100 text-blue-800 px-1.5 py-0.5 text-[10px] font-bold">
+              <span className="rounded-md bg-blue-100 text-blue-800 px-1.5 py-0.5 text-xs font-bold">
                 Usaha Mikro
               </span>
             </div>
@@ -116,7 +116,7 @@ export function ComplianceChecklist() {
         </div>
         <Link
           href="/onboarding"
-          className="text-xs text-primary font-semibold hover:underline shrink-0 px-2 py-3"
+          className="inline-flex min-h-11 min-w-11 items-center justify-center text-xs text-primary font-semibold hover:underline shrink-0 px-2"
         >
           Ubah
         </Link>
@@ -237,17 +237,19 @@ function ObligationCard({
             {o.title}
           </label>
         </div>
-        <input
-          id={inputId}
-          type="checkbox"
-          checked={checked}
-          onChange={onToggle}
-          aria-label={`Tandai selesai: ${o.title}`}
-          className={cn(
-            "w-5 h-5 mt-0.5 rounded-sm shrink-0",
-            warn ? "accent-amber-600" : "accent-primary",
-          )}
-        />
+        <label className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center -mt-2.5 -mr-2.5">
+          <input
+            id={inputId}
+            type="checkbox"
+            checked={checked}
+            onChange={onToggle}
+            aria-label={`Tandai selesai: ${o.title}`}
+            className={cn(
+              "w-5 h-5 mt-0.5 rounded-sm shrink-0",
+              warn ? "accent-amber-600" : "accent-primary",
+            )}
+          />
+        </label>
       </div>
       <p
         className={cn(
@@ -257,7 +259,7 @@ function ObligationCard({
       >
         {o.requirement_text}
       </p>
-      <p className="text-[11px] text-muted-foreground">
+      <p className="text-xs text-muted-foreground">
         Instansi: {o.issuing_agency}
         {o.source_url && (
           <>
@@ -310,7 +312,7 @@ function ChecklistLoading() {
           </li>
         ))}
       </ol>
-      <p className="text-[11px] text-muted-foreground">Biasanya selesai kurang dari 10 detik.</p>
+      <p className="text-xs text-muted-foreground">Biasanya selesai kurang dari 10 detik.</p>
     </div>
   );
 }

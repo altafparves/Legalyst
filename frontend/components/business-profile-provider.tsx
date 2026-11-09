@@ -2,13 +2,15 @@
 
 import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
 
-import type { KbliCandidate } from "@/lib/compliance";
+/** KBLI yang dipilih di Screen 1. Bentuknya cocok dengan KbliCandidate dari profiler. */
+export type SelectedKbli = {
+  code: string;
+  title: string;
+};
 
 export type BusinessProfile = {
   description: string;
-  kbli: KbliCandidate;
-  /** Semua kandidat dari profiler, agar pilihan bisa diubah tanpa analisis ulang. */
-  candidates: KbliCandidate[];
+  kbli: SelectedKbli;
 };
 
 type BusinessProfileContextValue = {
