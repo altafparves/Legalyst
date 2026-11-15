@@ -80,7 +80,7 @@ Projected workloads on muse-spark-1.3 (volumes are my assumptions, to confirm wi
 
 Ways to reduce cost:
 1. Use the LLM only when needed. Embeddings or BM25 can pick the top 3 for almost nothing, and the LLM only re-ranks when the match is weak. This is the largest saving.
-2. Check for a reasoning-effort setting in the Chat Completions docs to reduce thinking tokens. TODO: search the docs for "reasoning" and note the parameter name and allowed values (or write "not found").
+2. Reasoning effort: verified on Meta's docs (Features > Reasoning). Chat Completions takes a top-level `reasoning_effort` ("minimal", "low", "medium", "high", "xhigh", "max"; "none" is not supported). Default for Muse Spark is "high". Measured result: minimal cuts output tokens by about 75% versus default with the same accuracy on the eval set (see the effort table below). the docs for "reasoning" and note the parameter name and allowed values (or write "not found").
 3. Contributor mode for development and testing with synthetic data only, if Altaf approves.
 4. Keep system prompts fixed. Repeated prefixes are billed at the cached rate ($0.15 per 1M instead of $1.25), but input is the smaller part of our cost.
 5. Web search grounding costs an extra $2.50 per 1,000 queries if we ever enable it.
@@ -103,7 +103,7 @@ Options for the discussion:
 | (c) Separate embedding service | Depends on the model | Hosting cost | High | Needs Altaf's approval (we decided not to deploy models) |
 | (d) Google AI Studio gemini-embedding-001 | Strong multilingual (100+ languages) | $0.15 per 1M input tokens, free tier with low limits | Low | Output size is configurable and 1536 is a recommended size, so it fits `vector(1536)` with no migration. Second provider, needs approval. |
 
-TODO for option (d): verify on ai.google.dev the free-tier data-use policy and whether vectors need normalizing at sizes below 3072.
+Option (d) verified: normalization is required below 3072 dimensions (tested in scripts/check_norm.py, see section 10), and on the free tier Google may use submitted content to improve its products (Gemini API Additional Terms), so real user data needs a billing-enabled key.
 
 ## 7. Flags
 
@@ -111,8 +111,7 @@ TODO for option (d): verify on ai.google.dev the free-tier data-use policy and w
 2. Muse Spark Open and Muse Glimmer require self-hosting, which conflicts with the ticket's no-deploy rule.
 3. My account showed "No payment method on file", but the shared key worked with no billing error, so the banner does not block requests.
 4. Reasoning models need a large `max_tokens` (see section 3).
-5. Conflicts with `docs/ai-stack.md`: TODO (write "none found" or list the differences after reading that file).
-
+5. `docs/ai-stack.md` and a root `AGENTS.md`, both referenced in the ticket, are not in the repo (checked origin/main after merging, only `frontend/AGENTS.md` exists). I followed the constraints as written in the ticket.
 ## 8. Decision
 
 Use **muse-spark-1.3** for re-ranking, the chatbot, and document drafts. It is the current recommended Spark version, the same quality as Muse Wonder in my test, and about 3x cheaper per call. Contributor mode is a possible further saving if Altaf approves it.
@@ -126,7 +125,7 @@ Use **muse-spark-1.3** for re-ranking, the chatbot, and document drafts. It is t
 - Text rule: judul + " " + deskripsi, lowercase word tokens, BM25Okapi (rank-bm25)
 - Misses (expected code not in top 3): ayam geprek resto (56101), pecel lele tenda (56102), warung kelontong (47112), baju via Instagram/Shopee (47711), toko skincare (47724)
 - Cause: vocabulary mismatch. Users say "skincare", "pecel lele", "kelontong", "baju", which are not in the official descriptions, and generic words ("jual", "toko", "kecil") match unrelated codes. This is what semantic matching should fix.
-- Embedding option chosen by Altaf and its accuracy: TODO
+- Embedding option chosen by Altaf: Google AI gemini-embedding-001 (1536 dims, approved in the follow-up ticket). Accuracy: Top-1 90%, Top-3 100% on the 20 eval rows (see section 11).
 
 ## 10. Google AI embeddings (gemini-embedding-001)
 
@@ -186,3 +185,40 @@ Terima katering nasi kotak untuk acara kantor dan arisan.
    {'kode': '56210', 'judul': 'Aktivitas Jasa Boga untuk Acara Tertentu (event Catering)', 'score': 0.67}
    {'kode': '56290', 'judul': 'Aktivitas Penyediaan Jasa Boga Lainnya', 'score': 0.66}
    {'kode': '10750', 'judul': 'Industri Makanan dan Masakan Olahan', 'score': 0.63}
+
+   ### Reasoning effort (verified on Meta docs, Features > Reasoning)
+- Chat Completions parameter: `reasoning_effort` (top level). Responses API uses `reasoning.effort`.
+- Values: minimal, low, medium, high, xhigh, max. "none" is not supported by Muse Spark (HTTP 400).
+- Default when omitted: "high" on every Muse Spark version. This explains the 450 to 800 output tokens per call in my first tests.
+- Reasoning tokens are billed as output tokens and count toward max_tokens. Reported in `completion_tokens_details.reasoning_tokens`.
+- Meta recommends "low" for direct-answer tasks. Re-ranking 5 candidates is one.
+### Reasoning effort vs accuracy and cost (muse-spark-1.3 re-ranker, 20 rows, each setting run once)
+
+| Effort | Embedding + re-rank (Top-1 / Top-3) | Hybrid + re-rank (Top-1 / Top-3) | Avg in / out tokens | Avg latency per call | Cost per query |
+|---|---|---|---|---|---|
+| high (default) | 100% (20/20) / 100% (20/20) | 90% (18/20) / 95% (19/20) | 228 / 1284 | 12.7 s | $0.0057 |
+| low | 100% (20/20) / 100% (20/20) | 95% (19/20) / 95% (19/20) | 228 / 616 | 5.8 s | $0.0029 |
+| minimal | 100% (20/20) / 100% (20/20) | 95% (19/20) / 95% (19/20) | 228 / 317 | 3.1 s | $0.0016 |
+
+Token, latency, and cost figures are averages over 40 re-rank calls per setting (20 per method). Parameter: `reasoning_effort` on Chat Completions ("none" is not supported by Muse Spark).
+
+Findings: lowering the effort did not change accuracy on this set but cut output tokens by 52% (low) and 75% (minimal) versus the default, and latency from 12.7 s to 3.1 s. Chosen setting: **minimal**. Limits: 20 rows, each setting run once.
+## 11. Accuracy and cost comparison (20 eval rows, data/kbli_eval.csv)
+
+| Method | Top-1 | Top-3 | Added latency per query | Cost per query |
+|---|---|---|---|---|
+| BM25 only | 60% (12/20) | 75% (15/20) | about 1 ms | $0 |
+| Google embedding only (gemini-embedding-001, 1536 dims) | 90% (18/20) | 100% (20/20) | 1.1 to 1.6 s (one embedding API call, 4 runs measured) | about $0.000005 (my estimate: about 30 tokens at $0.15 per 1M) |
+| Hybrid (BM25 + embedding, RRF) | 85% (17/20) | 95% (19/20) | same as embedding | same as embedding |
+| Hybrid + muse-spark-1.3 re-rank (top-5, effort minimal) | 95% (19/20) | 95% (19/20) | embedding + 3.1 s | $0.0016 |
+| Embedding + muse-spark-1.3 re-rank (top-5 from embedding, effort minimal) | 100% (20/20) | 100% (20/20) | embedding + 3.1 s | $0.0016 |
+
+Findings:
+- Target met: embedding only reaches Top-3 = 100% (target was 80%).
+- Hybrid is worse than embedding alone on this set. BM25 pushed the one row it got wrong (skincare shop, expected 47724) out of the top 3, and BM25 itself missed that row. BM25's weakness is vocabulary mismatch (skincare vs kosmetik, pecel lele, kelontong).
+- Re-ranking embedding candidates raises Top-1 from 18/20 to 20/20 (two rows, 10 points). Re-ranking hybrid candidates cannot fix the skincare row, because its correct code was not among the 5 candidates.
+- Re-ranking costs about $0.0016 and 3.1 s per query at reasoning_effort = minimal (see section 10 for the effort comparison).
+- Limits: 20 rows is small and each row is 5 percentage points. The eval set was written before any tuning and no row was changed after seeing results. Each re-rank setting was run once.
+
+Recommendation (for Altaf to decide): use embedding retrieval for the profiler. The user sees 3 codes and picks one, and embedding-only already has the correct code in the top 3 for all 20 rows. Use the re-ranker (effort minimal) only if the order of the 3 codes matters, since it adds about 3 s and $0.0016 per query. Don't use BM25 hybrid unless a larger eval set shows a benefit.
+Update (measured): the profiler re-ranker with reasoning_effort=minimal averages 228 input / 317 output tokens, about $0.0016 per query. At my assumed 10,000 profiler requests that is about $16 (previously estimated $36 to $40 at default reasoning). The chatbot and document-draft rows are still assumptions and will be re-measured in Phase 5.
