@@ -127,3 +127,62 @@ Use **muse-spark-1.3** for re-ranking, the chatbot, and document drafts. It is t
 - Misses (expected code not in top 3): ayam geprek resto (56101), pecel lele tenda (56102), warung kelontong (47112), baju via Instagram/Shopee (47711), toko skincare (47724)
 - Cause: vocabulary mismatch. Users say "skincare", "pecel lele", "kelontong", "baju", which are not in the official descriptions, and generic words ("jual", "toko", "kecil") match unrelated codes. This is what semantic matching should fix.
 - Embedding option chosen by Altaf and its accuracy: TODO
+
+## 10. Google AI embeddings (gemini-embedding-001)
+
+Approved by Altaf as the embeddings provider. Meta muse-spark-1.3 stays for generation and re-ranking.
+
+### SDK usage
+- Package: `google-genai`. `client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])`
+- `client.models.embed_content(model=<GEMINI_EMBED_MODEL>, contents=[texts], config=types.EmbedContentConfig(task_type=..., output_dimensionality=1536))`
+- A list in `contents` returns one embedding per text: `result.embeddings[i].values`.
+
+### task_type
+- RETRIEVAL_DOCUMENT: texts that are stored and searched (KBLI codebook, regulation chunks).
+- RETRIEVAL_QUERY: what the user types (business description, compliance question).
+- SEMANTIC_SIMILARITY: comparing two texts with each other. Not used here.
+- Using DOCUMENT on one side and QUERY on the other is intended for retrieval.
+
+### 1536 dimensions and normalization
+- The default 3072-dim vector is already normalized. Truncated sizes (1536) are not, and Google's docs say to L2-normalize them.
+- Tested with scripts/check_norm.py: length at 3072 = 1.0, length at 1536 = 0.69777554, after normalizing = 1.0.
+- Decision: always L2-normalize after the API call (done inside embed()). With normalized vectors cosine similarity equals the dot product, and pgvector's cosine distance (<=>) is consistent.
+
+### Limits, batching, privacy
+- Free tier limits I found (unverified, from a forum post): about 100 RPM, 30k TPM, 1,000 RPD. Verified in AI Studio (Default Gemini Project, free tier, checked 2026-11-15): gemini-embedding-001 ("Gemini Embedding 1") has RPM 100, TPM 30K, RPD 1K. This matches the forum numbers.
+- The 313 KBLI rows are about 40k tokens, so embed() sends 20 texts per call, pauses between calls, and retries on 429 with exponential backoff.
+- Free tier privacy: Google may use inputs and outputs to improve its products and humans may review them; Google's terms say not to send sensitive or personal information. Paid tier (billing enabled) does not use prompts for training.
+- Consequence: the public KBLI codebook and regulation corpus are safe on the free tier. Real user descriptions and compliance questions need a billing-enabled key before production. Raised with Altaf.
+
+## Manual test outputs
+(.venv) G:\Legalyst>
+(.venv) G:\Legalyst>python scripts\matcher.py
+Saya jual kopi dan roti buatan sendiri di warung kecil, omzet sekitar 15 juta per bulan.
+   {'kode': '47243', 'judul': 'Perdagangan Eceran Kopi, Gula Pasir, Gula Merah, dan Sejenisnya', 'score': 0.66}
+   {'kode': '47242', 'judul': 'Perdagangan Eceran Roti, Kue Kering, Serta Kue Basah dan Sejenisnya', 'score': 0.65}
+   {'kode': '56304', 'judul': 'Aktivitas Kedai Minuman', 'score': 0.64}
+
+Saya jualan pecel lele di warung tenda pinggir jalan setiap malam.
+   {'kode': '56102', 'judul': 'Aktivitas Penyediaan Makanan di Bangunan Tidak Tetap', 'score': 0.64}
+   {'kode': '47592', 'judul': 'Perdagangan Eceran Peralatan Listrik Rumah Tangga, Peralatan Penerangan, dan Perlengkapannya', 'score': 0.63}
+   {'kode': '47112', 'judul': 'Perdagangan Eceran Berbagai Macam Barang yang Utamanya Makanan, Minuman, atau Tembakau Selain dengan Sistem Swalayan', 'score': 0.63}
+
+Buka toko skincare dan make up, produk dari brand lokal.
+   {'kode': '47724', 'judul': 'Perdagangan Eceran Kosmetik untuk Manusia', 'score': 0.68}
+   {'kode': '47728', 'judul': 'Perdagangan Eceran Kosmetik untuk Hewan', 'score': 0.63}
+   {'kode': '47722', 'judul': 'Perdagangan Eceran Sediaan Farmasi untuk Manusia Selain di Apotek', 'score': 0.63}
+
+Jualan baju lewat Instagram dan Shopee, barang dari supplier Tanah Abang.
+   {'kode': '47711', 'judul': 'Perdagangan Eceran Pakaian', 'score': 0.63}
+   {'kode': '47901', 'judul': 'Platform Digital Intermediasi Perdagangan Eceran', 'score': 0.62}
+   {'kode': '47742', 'judul': 'Perdagangan Eceran Pakaian, Alas Kaki, dan Perlengkapan Pakaian Bekas', 'score': 0.62}
+
+Warung kelontong di depan rumah jual sembako, rokok, dan minuman.
+   {'kode': '47112', 'judul': 'Perdagangan Eceran Berbagai Macam Barang yang Utamanya Makanan, Minuman, atau Tembakau Selain dengan Sistem Swalayan', 'score': 0.7}
+   {'kode': '47230', 'judul': 'Perdagangan Eceran Rokok dan Tembakau', 'score': 0.67}
+   {'kode': '47111', 'judul': 'Perdagangan Eceran Berbagai Macam Barang yang Utamanya Makanan, Minuman, atau Tembakau dengan Sistem Swalayan', 'score': 0.67}
+
+Terima katering nasi kotak untuk acara kantor dan arisan.
+   {'kode': '56210', 'judul': 'Aktivitas Jasa Boga untuk Acara Tertentu (event Catering)', 'score': 0.67}
+   {'kode': '56290', 'judul': 'Aktivitas Penyediaan Jasa Boga Lainnya', 'score': 0.66}
+   {'kode': '10750', 'judul': 'Industri Makanan dan Masakan Olahan', 'score': 0.63}
