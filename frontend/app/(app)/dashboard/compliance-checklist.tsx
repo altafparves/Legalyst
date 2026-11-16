@@ -17,7 +17,12 @@ import { useBusinessProfile } from "@/components/business-profile-provider";
 import { CitationBadge } from "@/components/citation-badge";
 import { DisclaimerBanner } from "@/components/disclaimer-banner";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { KBLI_VERSION, fetchChecklist, type Obligation } from "@/lib/compliance";
+import {
+  KBLI_VERSION,
+  fetchChecklist,
+  isKbliInCorpus,
+  type Obligation,
+} from "@/lib/compliance";
 import { cn } from "@/lib/utils";
 
 type Status = "loading" | "done" | "error";
@@ -123,6 +128,17 @@ export function ComplianceChecklist() {
       </div>
 
       <DisclaimerBanner />
+
+      {!isKbliInCorpus(profile.kbli.code) && (
+        <div className="rounded-xl border border-amber-300 bg-amber-50/60 p-4 text-xs sm:text-sm text-amber-900 flex items-start gap-2.5">
+          <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-600" />
+          <p>
+            KBLI {profile.kbli.code} belum ada di data kewajiban kami, jadi yang tampil hanya kewajiban
+            umum yang berlaku untuk semua usaha mikro. Kewajiban khusus bidang usaha Anda perlu dicek
+            manual di Sistem OSS.
+          </p>
+        </div>
+      )}
 
       {status === "loading" && <ChecklistLoading />}
 
@@ -259,7 +275,12 @@ function ObligationCard({
       >
         {o.requirement_text}
       </p>
+      {warn && o.notes && <p className="text-xs text-amber-900">{o.notes}</p>}
       <p className="text-xs text-muted-foreground">
+        Dasar hukum: {o.source_article}
+      </p>
+      <p className="text-xs text-muted-foreground">
+        {o.risk_tier && <>Risiko {o.risk_tier}{" • "}</>}
         Instansi: {o.issuing_agency}
         {o.source_url && (
           <>
@@ -276,7 +297,7 @@ function ObligationCard({
 
 const LOADING_STEPS = [
   "Membaca profil usaha & kode KBLI",
-  "Mencocokkan aturan OSS-RBA, P-IRT, Halal & pajak",
+  "Mencocokkan aturan OSS-RBA sesuai tingkat risiko",
   "Menyusun checklist beserta sitasi regulasi",
 ];
 
