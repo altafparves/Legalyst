@@ -104,30 +104,29 @@ All secrets are injected via environment variables (locally in `.env`, in CI via
 ## 6. Step-by-Step Execution Checklist (GitHub Issues Refactor)
 
 ### Phase 1 — Database & Storage on Supabase (Replaces `#5` & `#32`)
-- [ ] Create a Supabase project in **Southeast Asia (Singapore)** (`ap-southeast-1`).
-- [ ] In Supabase SQL Editor, verify `pgvector` is enabled:
+- [x] Create a Supabase project in **Asia-Pacific** (`hexsfylpeqsnrwvhwgid`, `aws-1-ap-northeast-1.pooler.supabase.com`).
+- [x] In Supabase SQL Editor, verify `pgvector` is enabled:
   ```sql
   CREATE EXTENSION IF NOT EXISTS vector;
   ```
-- [ ] Copy the **Session Pooler (IPv4 compatible, port 5432)** connection string from Supabase (`Settings → Database → Connection string → URI`) and change the scheme prefix to `postgresql+psycopg://`.
-- [ ] Run the existing Alembic migration against Supabase:
+- [x] Copy the **Session Pooler (IPv4 compatible, port 5432)** connection string from Supabase (`Settings → Database → Connection string → URI`) and change the scheme prefix to `postgresql+psycopg://`.
+- [x] Run the existing Alembic migration against Supabase:
   ```bash
   cd backend
   DATABASE_URL="postgresql+psycopg://..." alembic upgrade head
   ```
-- [ ] In Supabase Dashboard → **Storage**, create a bucket named `generated-documents` (for Sprint 3 PDF output).
+- [x] In Supabase Dashboard → **Storage**, create a bucket named `generated-documents` (for Sprint 3 PDF output).
 
-### Phase 2 — Backend Deployment on Render (Replaces `#5` & `#19`)
-- [ ] Connect the GitHub repo to **Render** as a **Web Service** with Root Directory set to `backend`.
-- [ ] Configure Build Command: `pip install -r requirements.txt` and Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
-- [ ] Add all backend environment variables from Section 5 in the Render dashboard.
-- [ ] Verify `GET https://<your-render-service>.onrender.com/health` returns `200 OK`.
+### Phase 2 — Backend Deployment on Vercel / Render (Replaces `#5` & `#19`)
+- [x] Connect the GitHub repo (`backend/` Root Directory) to **Vercel** (`https://legalyst.vercel.app`) as a FastAPI Web Service (or Render).
+- [x] Add all backend environment variables from Section 5 in the deployment dashboard.
+- [x] Verify `GET https://legalyst.vercel.app/health` returns `200 OK` (`{"status":"ok"}`).
 
 ### Phase 3 — Frontend Deployment on Vercel (Replaces `#19`)
-- [ ] Import the GitHub repo into **Vercel** with Root Directory set to `frontend`.
-- [ ] Set `NEXT_PUBLIC_API_URL` to the Render backend URL (`https://<your-render-service>.onrender.com`).
-- [ ] Copy the deployed Vercel domain (`https://<your-app>.vercel.app`) back into Render's `CORS_ORIGINS` env var.
+- [x] Import the GitHub repo into **Vercel** (`https://legalyst-frontend.vercel.app`) with Root Directory set to `frontend`.
+- [x] Set `NEXT_PUBLIC_API_URL` / `NEXT_PUBLIC_API_BASE_URL` to the backend URL (`https://legalyst.vercel.app`).
+- [x] Copy the deployed Vercel frontend domain (`https://legalyst-frontend.vercel.app`) back into the backend's `CORS_ORIGINS` env var.
 
 ### Phase 4 — Corpus & Embeddings Ingestion (Replaces `#34` / `#63`)
-- [ ] Run the KBLI & regulation chunk ingestion script against Supabase `DATABASE_URL` using `gemini-embedding-001` (`1536` dims, L2-normalized).
+- [x] Run `backend/scripts/ingest_regulations.py` against Supabase `DATABASE_URL` using `gemini-embedding-001` (`1536` dims, L2-normalized) and verify cosine retrieval via `backend/scripts/verify_retrieval.py`.
 
