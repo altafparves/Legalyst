@@ -19,7 +19,7 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight text-foreground">
+        <Link href="/" className="flex min-h-12 items-center gap-2 text-lg font-bold tracking-tight text-foreground">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground text-sm font-black">
             ⚖️
           </span>
@@ -49,10 +49,10 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link href="/login" className={buttonVariants({ variant: "outline", size: "sm" })}>
+          <Link href="/login" className={buttonVariants({ variant: "outline", size: "sm", className: "h-12 px-4 md:h-8 md:px-3" })}>
             Masuk
           </Link>
-          <Link href="/register" className={buttonVariants({ size: "sm" })}>
+          <Link href="/register" className={buttonVariants({ size: "sm", className: "h-12 px-4 md:h-8 md:px-3" })}>
             Daftar
           </Link>
         </div>

@@ -23,7 +23,7 @@ export function ComplianceStepper({ currentStep }: StepperProps) {
             <div key={item.step} className="flex items-center gap-1.5 sm:gap-2">
               <Link
                 href={item.href}
-                className={`flex items-center gap-1.5 font-medium transition-colors ${
+                className={`flex min-h-12 items-center gap-1.5 font-medium transition-colors ${
                   isActive
                     ? "text-primary font-bold"
                     : isDone
