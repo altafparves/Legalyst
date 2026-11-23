@@ -1,33 +1,44 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowRight, CheckCircle2, Loader2, Sparkles } from "lucide-react";
 
+import { useBusinessProfile } from "@/components/business-profile-provider";
 import { cn } from "@/lib/utils";
 import {
+  RISK_LABEL,
   matchErrorMessage,
   matchKbli,
   type KbliCandidate,
+  type RiskLevel,
 } from "@/lib/profiler";
 
 const MIN_WORDS = 10;
+const MAX_WORDS = 300;
+
+const RISK_STYLE: Record<RiskLevel, { badge: string; dot: string }> = {
+  rendah: { badge: "bg-emerald-50 text-emerald-800 border-emerald-200", dot: "bg-emerald-600" },
+  "menengah rendah": { badge: "bg-lime-50 text-lime-900 border-lime-200", dot: "bg-lime-600" },
+  "menengah tinggi": { badge: "bg-amber-50 text-amber-900 border-amber-200", dot: "bg-amber-500" },
+  tinggi: { badge: "bg-red-50 text-red-800 border-red-200", dot: "bg-red-600" },
+};
 
 const EXAMPLES = [
-  "Keripik & Camilan Rumahan",
+  "Keripik & Snack Rumahan",
   "Kedai Kopi & Minuman",
-  "Katering Rumahan",
-  "Warung Kelontong",
+  "Katering Makanan",
+  "Toko Kelontong",
 ];
 
 const EXAMPLE_TEXT: Record<string, string> = {
-  "Keripik & Camilan Rumahan":
+  "Keripik & Snack Rumahan":
     "Saya memproduksi keripik pisang aneka rasa dari dapur rumah dan menjualnya ke warung sekitar serta toko oleh-oleh. Ada 2 pekerja.",
   "Kedai Kopi & Minuman":
     "Saya punya kedai kopi kecil yang menjual kopi seduh dan minuman dingin langsung ke pelanggan, dengan 2 karyawan.",
-  "Katering Rumahan":
+  "Katering Makanan":
     "Saya menjual katering nasi boks rumahan untuk acara kantor dan arisan, dimasak sendiri di dapur rumah.",
-  "Warung Kelontong":
+  "Toko Kelontong":
     "Saya membuka warung kelontong yang menjual sembako dan makanan ringan kemasan kepada warga sekitar.",
 };
 
@@ -36,15 +47,21 @@ function countWords(text: string): number {
 }
 
 export function BusinessProfiler() {
+  const router = useRouter();
+  const { setProfile } = useBusinessProfile();
   const [description, setDescription] = useState("");
   const [fieldError, setFieldError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [candidates, setCandidates] = useState<KbliCandidate[] | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const [activeChip, setActiveChip] = useState<string | null>(null);
 
-  function updateDescription(value: string) {
+  const wordCount = countWords(description);
+
+  function updateDescription(value: string, chip: string | null = null) {
     setDescription(value);
+    setActiveChip(chip);
     setFieldError(null);
     setSubmitError(null);
   }
@@ -53,8 +70,12 @@ export function BusinessProfiler() {
     event.preventDefault();
     if (pending) return;
 
-    if (countWords(description) < MIN_WORDS) {
+    if (wordCount < MIN_WORDS) {
       setFieldError(`Deskripsi minimal ${MIN_WORDS} kata.`);
+      return;
+    }
+    if (wordCount > MAX_WORDS) {
+      setFieldError(`Deskripsi maksimal ${MAX_WORDS} kata.`);
       return;
     }
 
@@ -73,6 +94,16 @@ export function BusinessProfiler() {
     }
   }
 
+  function handleUseKbli() {
+    const chosen = candidates?.find((candidate) => candidate.code === selected);
+    if (!chosen) return;
+    setProfile({
+      description: description.trim(),
+      kbli: { code: chosen.code, title: chosen.title },
+    });
+    router.push("/dashboard");
+  }
+
   return (
     <>
       <form
@@ -86,8 +117,13 @@ export function BusinessProfiler() {
             className="flex items-center justify-between text-sm font-semibold text-foreground"
           >
             <span>Deskripsi Usaha</span>
-            <span className="text-xs font-normal text-muted-foreground">
-              Min. {MIN_WORDS} kata
+            <span
+              className={cn(
+                "text-xs font-normal",
+                wordCount > MAX_WORDS ? "text-red-600" : "text-muted-foreground",
+              )}
+            >
+              {wordCount} / {MAX_WORDS} kata (min. {MIN_WORDS})
             </span>
           </label>
           <textarea
@@ -117,9 +153,16 @@ export function BusinessProfiler() {
                 key={chip}
                 type="button"
                 disabled={pending}
-                onClick={() => updateDescription(EXAMPLE_TEXT[chip])}
-                className="inline-flex min-h-11 items-center rounded-full border border-border bg-muted/60 px-3.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:opacity-50"
+                aria-pressed={activeChip === chip}
+                onClick={() => updateDescription(EXAMPLE_TEXT[chip], chip)}
+                className={cn(
+                  "inline-flex min-h-12 items-center gap-1.5 rounded-full border px-4 text-xs transition-colors disabled:opacity-50",
+                  activeChip === chip
+                    ? "border-primary bg-primary/10 font-semibold text-primary"
+                    : "border-border bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground",
+                )}
               >
+                {activeChip === chip && <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />}
                 {chip}
               </button>
             ))}
@@ -129,7 +172,7 @@ export function BusinessProfiler() {
         <button
           type="submit"
           disabled={pending}
-          className="flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-semibold text-primary-foreground shadow-xs transition-all hover:bg-primary/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
+          className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-semibold text-primary-foreground shadow-xs transition-all hover:bg-primary/90 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-70"
         >
           {pending ? (
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
@@ -164,7 +207,7 @@ export function BusinessProfiler() {
                 <label
                   key={candidate.code}
                   className={cn(
-                    "flex min-h-11 cursor-pointer items-start gap-3 rounded-xl border bg-card p-4 transition-colors",
+                    "flex min-h-12 cursor-pointer items-start gap-3 rounded-xl border bg-card p-4 transition-colors",
                     isSelected ? "border-2 border-primary shadow-sm" : "border-border hover:border-primary/40",
                   )}
                 >
@@ -174,7 +217,7 @@ export function BusinessProfiler() {
                     value={candidate.code}
                     checked={isSelected}
                     onChange={() => setSelected(candidate.code)}
-                    className="mt-1 h-5 w-5 shrink-0 accent-primary"
+                    className="mt-0.5 h-6 w-6 shrink-0 accent-primary"
                   />
                   <div className="min-w-0 space-y-1.5">
                     <div className="flex flex-wrap items-center gap-2">
@@ -187,12 +230,26 @@ export function BusinessProfiler() {
                         )}
                       >
                         {index === 0 && <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />}
-                        Kecocokan {percent}%
+                        Kecocokan {percent}%{percent >= 90 && " (Sangat Cocok)"}
                       </span>
-                      <span className="rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium capitalize text-muted-foreground">
-                        Risiko {candidate.risk}
-                      </span>
+                      {index === 0 && (
+                        <span className="rounded bg-primary/10 px-2 py-0.5 text-[11px] font-bold text-primary">
+                          Pilihan Utama
+                        </span>
+                      )}
                     </div>
+                    <span
+                      className={cn(
+                        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold",
+                        RISK_STYLE[candidate.risk].badge,
+                      )}
+                    >
+                      <span
+                        className={cn("h-2 w-2 rounded-full", RISK_STYLE[candidate.risk].dot)}
+                        aria-hidden
+                      />
+                      {RISK_LABEL[candidate.risk]}
+                    </span>
                     <h3 className="text-sm font-semibold text-foreground">
                       KBLI {candidate.code}: {candidate.title}
                     </h3>
@@ -205,17 +262,15 @@ export function BusinessProfiler() {
             })}
           </div>
 
-          <Link
-            href="/dashboard"
-            aria-disabled={!selected}
-            className={cn(
-              "flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-center text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90",
-              !selected && "pointer-events-none opacity-50",
-            )}
+          <button
+            type="button"
+            onClick={handleUseKbli}
+            disabled={!selected}
+            className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 text-center text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <span>Gunakan KBLI Ini & Susun Checklist</span>
             <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
-          </Link>
+          </button>
         </section>
       )}
     </>
