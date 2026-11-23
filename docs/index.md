@@ -124,7 +124,7 @@ Sprint 0 = Session 1–4 · Sprint 1 = Session 5–6 · Sprint 2 = Session 7–8
 | Sprint 2 — Compliance Wizard (RAG) | | | | | | | ● | ● | | | | |
 | Sprint 3 — Document Generator | | | | | | | | | ● | ● | | |
 | Integration & Testing | | | | | | | | | | ● | ● | |
-| Azure Deployment | | | ● | ● | | | | | | | ● | |
+| Cloud Deployment (Vercel + Render + Supabase) | | | ● | ● | | | | | | | ● | |
 | Usability Testing | | | | | | | | | | | ● | |
 | Documentation | | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● | ● |
 | Demo Preparation | | | | | | | | | | | | ● |
