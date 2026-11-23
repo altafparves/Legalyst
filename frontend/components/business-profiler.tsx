@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowRight, CheckCircle2, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2, Search, Sparkles } from "lucide-react";
 
 import { useBusinessProfile } from "@/components/business-profile-provider";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,6 @@ import {
 } from "@/lib/profiler";
 
 const MIN_WORDS = 10;
-const MAX_WORDS = 300;
 
 const RISK_STYLE: Record<RiskLevel, { badge: string; dot: string }> = {
   rendah: { badge: "bg-emerald-50 text-emerald-800 border-emerald-200", dot: "bg-emerald-600" },
@@ -74,10 +73,6 @@ export function BusinessProfiler() {
       setFieldError(`Deskripsi minimal ${MIN_WORDS} kata.`);
       return;
     }
-    if (wordCount > MAX_WORDS) {
-      setFieldError(`Deskripsi maksimal ${MAX_WORDS} kata.`);
-      return;
-    }
 
     setPending(true);
     setSubmitError(null);
@@ -120,10 +115,10 @@ export function BusinessProfiler() {
             <span
               className={cn(
                 "text-xs font-normal",
-                wordCount > MAX_WORDS ? "text-red-600" : "text-muted-foreground",
+                wordCount >= MIN_WORDS ? "text-emerald-700" : "text-muted-foreground",
               )}
             >
-              {wordCount} / {MAX_WORDS} kata (min. {MIN_WORDS})
+              {wordCount} / {MIN_WORDS} kata minimum
             </span>
           </label>
           <textarea
@@ -191,7 +186,7 @@ export function BusinessProfiler() {
         <section className="space-y-3" aria-live="polite">
           <div className="flex items-center justify-between gap-2">
             <h2 className="text-base font-bold text-foreground">
-              Hasil Rekomendasi KBLI
+              Hasil Pencocokan KBLI 2025
             </h2>
             <span className="text-xs text-muted-foreground">
               {candidates.length} Kandidat Ditemukan
@@ -230,7 +225,7 @@ export function BusinessProfiler() {
                         )}
                       >
                         {index === 0 && <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />}
-                        Kecocokan {percent}%{percent >= 90 && " (Sangat Cocok)"}
+                        Kecocokan {percent}%{index === 0 && percent >= 85 && " (Sangat Cocok)"}
                       </span>
                       {index === 0 && (
                         <span className="rounded bg-primary/10 px-2 py-0.5 text-[11px] font-bold text-primary">
@@ -241,11 +236,16 @@ export function BusinessProfiler() {
                     <span
                       className={cn(
                         "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold",
-                        RISK_STYLE[candidate.risk].badge,
+                        index === 0
+                          ? "border-blue-200 bg-blue-50 text-blue-700"
+                          : RISK_STYLE[candidate.risk].badge,
                       )}
                     >
                       <span
-                        className={cn("h-2 w-2 rounded-full", RISK_STYLE[candidate.risk].dot)}
+                        className={cn(
+                          "h-2 w-2 rounded-full",
+                          index === 0 ? "bg-blue-600" : RISK_STYLE[candidate.risk].dot,
+                        )}
                         aria-hidden
                       />
                       {RISK_LABEL[candidate.risk]}
@@ -271,6 +271,11 @@ export function BusinessProfiler() {
             <span>Gunakan KBLI Ini & Susun Checklist</span>
             <ArrowRight className="h-4 w-4 shrink-0" aria-hidden />
           </button>
+
+          <p className="flex items-start gap-2 rounded-lg border border-border bg-muted/40 p-3 text-xs leading-relaxed text-muted-foreground">
+            <Search className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+            <span>Kode KBLI tidak pas? Cari manual dengan nomor atau kata kunci.</span>
+          </p>
         </section>
       )}
     </>

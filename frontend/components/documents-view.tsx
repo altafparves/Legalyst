@@ -65,14 +65,15 @@ export function DocumentsView() {
     );
   }
 
-  const kbliCode = profile.kbli.code;
+  const kbli = profile.kbli;
+  const kbliCode = kbli.code;
   const doneCount = DOCUMENTS.filter((d) => states[d.id] === "done").length;
 
   async function handleDownload(doc: GeneratedDocument) {
     if (states[doc.id] === "loading") return;
     setStates((prev) => ({ ...prev, [doc.id]: "loading" }));
     try {
-      await downloadDocument(doc, kbliCode);
+      await downloadDocument(doc, kbli);
       setStates((prev) => ({ ...prev, [doc.id]: "done" }));
     } catch {
       setStates((prev) => ({ ...prev, [doc.id]: "error" }));
@@ -83,7 +84,7 @@ export function DocumentsView() {
     if (zipState === "loading") return;
     setZipState("loading");
     try {
-      await downloadAllDocuments(kbliCode);
+      await downloadAllDocuments(kbli);
       setZipState("done");
       setStates(Object.fromEntries(DOCUMENTS.map((d) => [d.id, "done" as const])));
     } catch {

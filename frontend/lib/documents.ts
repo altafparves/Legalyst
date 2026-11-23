@@ -1,4 +1,5 @@
 import { getApiUrl } from "@/lib/api";
+import { buildSamplePdf, buildZip } from "@/lib/sample-files";
 
 export type GeneratedDocument = {
   id: string;
@@ -23,7 +24,7 @@ export const DOCUMENTS: GeneratedDocument[] = [
   },
   {
     id: "doc-2",
-    title: "Formulir Komitmen Higienitas & Sanitasi P-IRT",
+    title: "Formulir Komitmen Higienitas & Sanitasi SPP-IRT",
     issuer: "Standar Dinas Kesehatan",
     badgeColor: "bg-emerald-50 text-emerald-700 border-emerald-200",
     size: "180 KB",
@@ -69,25 +70,46 @@ async function fetchAndSave(path: string, filename: string, body: unknown) {
 const apiConfigured = Boolean(process.env.NEXT_PUBLIC_API_BASE_URL);
 const stubDelay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-// Stub sampai endpoint generate dokumen (backend + Supabase Storage) tersedia.
-// Tanpa NEXT_PUBLIC_API_BASE_URL, hanya mensimulasikan proses dan tidak mengunduh berkas.
-// Dengan API: POST /api/v1/documents/{id}/pdf dan POST /api/v1/documents/zip
-// (path dan body masih usulan, sesuaikan dengan kontrak backend).
-export async function downloadDocument(doc: GeneratedDocument, kbliCode: string): Promise<void> {
-  if (!apiConfigured) {
-    await stubDelay(1200);
-    return;
-  }
-  await fetchAndSave(`/api/v1/documents/${doc.id}/pdf`, doc.filename, { kbli: kbliCode });
+export type KbliInfo = { code: string; title: string };
+
+function samplePdf(doc: GeneratedDocument, kbli: KbliInfo): Uint8Array {
+  return buildSamplePdf({
+    title: doc.title,
+    issuer: doc.issuer,
+    kbliCode: kbli.code,
+    kbliTitle: kbli.title,
+    body: doc.desc.replace("{kbli}", kbli.code),
+  });
 }
 
-export async function downloadAllDocuments(kbliCode: string): Promise<void> {
+function asBlob(bytes: Uint8Array, type: string): Blob {
+  return new Blob([bytes as BlobPart], { type });
+}
+
+// Fallback sisi klien: tanpa NEXT_PUBLIC_API_BASE_URL, berkas contoh dibuat di browser
+// (PDF sederhana bertanda "CONTOH"). Dengan API (endpoint Minggu 2; path dan body masih
+// usulan, sesuaikan dengan kontrak backend): POST /api/v1/documents/{id}/pdf dan
+// POST /api/v1/documents/zip.
+export async function downloadDocument(doc: GeneratedDocument, kbli: KbliInfo): Promise<void> {
+  if (!apiConfigured) {
+    await stubDelay(1200);
+    saveBlob(asBlob(samplePdf(doc, kbli), "application/pdf"), doc.filename);
+    return;
+  }
+  await fetchAndSave(`/api/v1/documents/${doc.id}/pdf`, doc.filename, { kbli: kbli.code });
+}
+
+export async function downloadAllDocuments(kbli: KbliInfo): Promise<void> {
   if (!apiConfigured) {
     await stubDelay(1800);
+    const zip = buildZip(
+      DOCUMENTS.map((doc) => ({ name: doc.filename, data: samplePdf(doc, kbli) })),
+    );
+    saveBlob(asBlob(zip, "application/zip"), ZIP_FILENAME);
     return;
   }
   await fetchAndSave("/api/v1/documents/zip", ZIP_FILENAME, {
-    kbli: kbliCode,
+    kbli: kbli.code,
     ids: DOCUMENTS.map((d) => d.id),
   });
 }
