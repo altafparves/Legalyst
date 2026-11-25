@@ -16,6 +16,13 @@ class Settings:
         self.jwt_secret_key = os.environ.get("JWT_SECRET_KEY", "dev-secret-change-me")
         self.jwt_algorithm = os.environ.get("JWT_ALGORITHM", "HS256")
         self.jwt_expire_minutes = int(os.environ.get("JWT_EXPIRE_MINUTES", "60"))
+        self.supabase_url = os.environ.get("SUPABASE_URL", "").strip()
+        self.supabase_service_role_key = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "").strip()
+        self.supabase_storage_bucket = (
+            os.environ.get("SUPABASE_STORAGE_BUCKET", "generated-documents").strip()
+            or "generated-documents"
+        )
+
 
 
 @lru_cache
