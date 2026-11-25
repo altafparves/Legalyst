@@ -1,6 +1,6 @@
 """FastAPI v1 OpenAPI contract routers for Profiler, Compliance Checklist, RAG Chat & Documents (#83, #77)."""
 
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
@@ -15,6 +15,7 @@ from app.schemas import (
     ChecklistResponse,
     DocumentGenerateRequest,
     DocumentListResponse,
+    DocumentTypeLiteral,
     ProfilerMatchRequest,
     ProfilerMatchResponse,
 )
@@ -24,6 +25,7 @@ from app.services.documents import (
     build_documents_zip_bytes,
     generate_user_documents,
     list_user_documents,
+    render_document_pdf_bytes,
 )
 from app.services.kbli import get_kbli_entry
 from app.services.profiler import match_kbli
@@ -166,6 +168,7 @@ def _resolve_profile_model(db: Session, user: User) -> BusinessProfile:
     tags=["documents"],
 )
 def documents_generate(
+    background_tasks: BackgroundTasks,
     payload: DocumentGenerateRequest | None = None,
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
@@ -173,7 +176,14 @@ def documents_generate(
     """Trigger draft document generation using the user's saved Business Profile (#69, #77, #83)."""
     profile = _resolve_profile_model(db=db, user=current_user)
     doc_types = payload.document_types if payload else None
-    return generate_user_documents(db=db, profile=profile, document_types=doc_types)
+    kbli_override = payload.kbli_code if payload else None
+    return generate_user_documents(
+        db=db,
+        profile=profile,
+        document_types=doc_types,
+        kbli_code_override=kbli_override,
+        background_tasks=background_tasks,
+    )
 
 
 @router.get(
@@ -191,6 +201,35 @@ def documents_list(
 
 
 @router.get(
+    "/documents/download/{doc_type}",
+    tags=["documents"],
+)
+def documents_download_single(
+    doc_type: DocumentTypeLiteral,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+) -> Response:
+    """Download an individual rendered compliance draft PDF for the user's Business Profile (#69)."""
+    profile = _resolve_profile_model(db=db, user=current_user)
+    entry = get_kbli_entry(profile.kbli_code or "")
+    kbli_title = entry.judul if entry else f"KBLI {profile.kbli_code}"
+    pdf_bytes = render_document_pdf_bytes(
+        doc_type=doc_type,
+        profile=profile,
+        kbli_title=kbli_title,
+    )
+    return Response(
+        content=pdf_bytes,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": (
+                f'attachment; filename="{doc_type}-{profile.kbli_code}.pdf"'
+            )
+        },
+    )
+
+
+@router.get(
     "/documents/download-zip",
     tags=["documents"],
 )
@@ -198,7 +237,7 @@ def documents_download_zip(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db),
 ) -> Response:
-    """Bundle all 3 draft compliance documents for the user's Business Profile into a .zip archive."""
+    """Bundle all 3 draft compliance PDFs for the user's Business Profile into a .zip archive."""
     profile = _resolve_profile_model(db=db, user=current_user)
     entry = get_kbli_entry(profile.kbli_code or "")
     kbli_title = entry.judul if entry else f"KBLI {profile.kbli_code}"
