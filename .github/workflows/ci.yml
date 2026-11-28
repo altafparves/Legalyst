@@ -1,10 +1,10 @@
-name: Legalyst CI - Lint & Build
+name: Legalyst CI - Lint, Test & Build
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   backend:
@@ -17,11 +17,13 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Lint
-        run: ruff check .
+        run: ruff check app tests
+      - name: Unit & Integration Tests
+        run: pytest -v
 
   frontend:
     runs-on: ubuntu-latest

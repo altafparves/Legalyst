@@ -1,0 +1,19 @@
+name: Legalyst Keep-Alive (Backend + Supabase DB)
+
+on:
+  schedule:
+    # Run every 6 hours to prevent Supabase 7-day inactivity pause and keep backend warm (#73)
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping backend /health/db (SELECT 1)
+        env:
+          HEALTH_URL: ${{ vars.BACKEND_HEALTH_URL || 'https://legalyst.vercel.app/health/db' }}
+        run: |
+          echo "Pinging ${HEALTH_URL}..."
+          curl --fail --silent --show-error --retry 2 --retry-delay 5 --max-time 25 "${HEALTH_URL}"
+          echo ""
