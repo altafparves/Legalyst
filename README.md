@@ -14,7 +14,8 @@
 | **Frontend Application (Vercel)** | [https://legalyst-frontend.vercel.app](https://legalyst-frontend.vercel.app) | Next.js 15 mobile-first web application (`/onboarding`, `/dashboard`, `/documents`) |
 | **Backend API Base URL** | [https://legalyst.vercel.app](https://legalyst.vercel.app) | FastAPI backend service |
 | **Interactive API Docs (Swagger UI)** | [https://legalyst.vercel.app/docs](https://legalyst.vercel.app/docs) | OpenAPI v1 specification and interactive endpoint tester |
-| **API Health Check** | [https://legalyst.vercel.app/health](https://legalyst.vercel.app/health) | Service & database readiness probe (`{"status": "ok"}`) |
+| **API Health Check** | [https://legalyst.vercel.app/health](https://legalyst.vercel.app/health) | Service readiness probe (`{"status": "ok"}`) |
+| **Database Health Check** | [https://legalyst.vercel.app/health/db](https://legalyst.vercel.app/health/db) | PostgreSQL `SELECT 1` keep-alive probe (`{"status": "ok", "database": "ok"}`) |
 | **Project Documentation Site** | [`docs/index.md`](docs/index.md) | Capstone PRD, wireframes, ERD, and sprint roadmap |
 
 ---
